@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/leanprover/lean4",
+  "description": "Lean 4 is a statically typed, dependently typed functional programming language with support for type theory, proof assistants, and formal verification.",
+  "main_topics": [
+    "Theorem Proving",
+    "Functional Programming Features"
+  ],
+  "key_features": [
+    "Type Theory",
+    "Dependent Types",
+    "Proof Assistants",
+    "Formal Verification",
+    "Higher-Order Functions",
+    "Closures",
+    "Pattern Matching",
+    "Recursion Schemes",
+    "Lazy Evaluation"
+  ],
+  "use_cases": [
+    "Formal verification of software and hardware systems",
+    "Theorem proving for mathematics",
+    "Type theory research",
+    "Proof assistants for dependent types",
+    "Education and research in formal verification and type theory"
+  ]
+}

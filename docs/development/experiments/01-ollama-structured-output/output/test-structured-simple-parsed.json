@@ -1,0 +1,16 @@
+{
+  "languages": [
+    {
+      "name": "Python",
+      "use_case": "Data Science, Machine Learning, Web Development"
+    },
+    {
+      "name": "JavaScript",
+      "use_case": "Web Development, Mobile App Development, Game Development"
+    },
+    {
+      "name": "C++",
+      "use_case": "Operating Systems, Games, High-Performance Computing"
+    }
+  ]
+}

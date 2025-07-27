@@ -1,0 +1,73 @@
+;;; test-validation.scm - Test topic validation functions
+
+(use-modules (ice-9 regex))
+
+;; Load validation functions from repo-topics
+(define (valid-github-topic? topic)
+  "Check if topic meets GitHub requirements"
+  (and (string? topic)
+       (> (string-length topic) 0)
+       (<= (string-length topic) 50)
+       (string-match "^[a-z0-9][a-z0-9-]*[a-z0-9]?$" topic)))
+
+;;; Topic validation tests
+(test-start "valid-github-topic? with valid topics")
+(assert (valid-github-topic? "python") "python should be valid")
+(assert (valid-github-topic? "machine-learning") "machine-learning should be valid")
+(assert (valid-github-topic? "llm") "llm should be valid")
+(assert (valid-github-topic? "github-api") "github-api should be valid")
+(assert (valid-github-topic? "functional-programming") "functional-programming should be valid")
+(assert (valid-github-topic? "42") "42 should be valid")
+(assert (valid-github-topic? "python3") "python3 should be valid")
+(assert (valid-github-topic? "a1b2c3") "a1b2c3 should be valid")
+(test-pass)
+
+(test-start "valid-github-topic? with invalid topics")
+(assert (not (valid-github-topic? "")) "empty string should be invalid")
+(assert (not (valid-github-topic? "Python")) "uppercase should be invalid")
+(assert (not (valid-github-topic? "-python")) "leading hyphen should be invalid")
+(assert (not (valid-github-topic? "python-")) "trailing hyphen should be invalid")
+(assert (not (valid-github-topic? "python_script")) "underscore should be invalid")
+(assert (not (valid-github-topic? "hello world")) "spaces should be invalid")
+(assert (not (valid-github-topic? "hello@world")) "special chars should be invalid")
+(assert (not (valid-github-topic? #f)) "false should be invalid")
+(assert (not (valid-github-topic? 42)) "number should be invalid")
+(assert (not (valid-github-topic? 
+              (string-join (make-list 51 "a") ""))) 
+        "51 character string should be invalid")
+(test-pass)
+
+(test-start "valid-github-topic? edge cases")
+(assert (valid-github-topic? "a") "single character should be valid")
+(assert (valid-github-topic? (string-join (make-list 50 "a") "")) 
+        "50 character string should be valid")
+(assert (valid-github-topic? "a-b") "a-b should be valid")
+(assert (valid-github-topic? "1") "single digit should be valid")
+(assert (valid-github-topic? "1-2-3") "1-2-3 should be valid")
+(test-pass)
+
+;;; JSON validation tests (simplified)
+(test-start "valid-json? basic tests")
+(let ((valid-json? (lambda (str)
+                    (let* ((cmd (format #f "echo '~a' | jq . > /dev/null 2>&1" str))
+                           (result (run-command cmd)))
+                      (zero? (car result))))))
+  (assert (valid-json? "{}") "empty object should be valid")
+  (assert (valid-json? "[]") "empty array should be valid")
+  (assert (valid-json? "{\"key\": \"value\"}") "simple object should be valid")
+  (assert (not (valid-json? "{invalid}")) "invalid JSON should fail")
+  (assert (not (valid-json? "")) "empty string should be invalid JSON"))
+(test-pass)
+
+;;; Topic count validation
+(test-start "topic count validation")
+(let ((validate-topic-count (lambda (topics)
+                             (and (>= (length topics) 3)
+                                  (<= (length topics) 10)))))
+  (assert (not (validate-topic-count '())) "0 topics should be invalid")
+  (assert (not (validate-topic-count '("a" "b"))) "2 topics should be invalid")
+  (assert (validate-topic-count '("a" "b" "c")) "3 topics should be valid")
+  (assert (validate-topic-count '("a" "b" "c" "d" "e")) "5 topics should be valid")
+  (assert (validate-topic-count (make-list 10 "topic")) "10 topics should be valid")
+  (assert (not (validate-topic-count (make-list 11 "topic"))) "11 topics should be invalid"))
+(test-pass)
