@@ -1,0 +1,40 @@
+Context and Details for Status Update and Run Targets
+
+BACKGROUND:
+Updated project status to pre-release and added operational targets for testing the tool. Verified Ollama server is running with available models.
+
+CHANGES MADE:
+1. Updated README.md:
+   - Added pre-release status badge
+   - Marked project as 'Pre-release - Core functionality complete, undergoing testing'
+   - Added detailed version requirements for all dependencies
+   - Listed tested versions on FreeBSD 14.3
+
+2. Added Makefile targets:
+   - gmake run: Executes tool with --dry-run --verbose
+   - gmake verify-ollama: Checks if Ollama server is accessible
+   - Both targets tested and working
+
+TESTING:
+- verify-ollama completed in 0.15 seconds
+- Shows available models: llama3.2:3b, qwen2.5-coder:7b, nomic-embed-text
+- run target works but reports 'No GitHub remote' (expected in test repo)
+- Ollama server confirmed running at localhost:11434
+
+MODELS AVAILABLE:
+- llama3.2:3b (2.0 GB) - Default model for topic generation
+- qwen2.5-coder:7b (4.7 GB) - Alternative model with better code understanding
+- nomic-embed-text:latest (274 MB) - Embedding model (not used for generation)
+
+Note: llama3.2:3b supports structured output and basic tool calling, making it suitable for JSON generation tasks.
+
+EXPERIMENTS:
+None - operational improvements
+
+DEVIATIONS:
+- Removed duplicate docs/development/experiments/00-timeout-driven-development/
+
+FOLLOW-UP:
+- Tool is functional and ready for testing
+- Consider adding GitHub remote for full workflow testing
+- May want to test with qwen2.5-coder:7b for comparison
