@@ -1,0 +1,46 @@
+Context and Details for Experiments and Deps Target
+
+BACKGROUND:
+User requested three specific additions:
+1. Experiment showing timeout-driven development approach
+2. Experiment for build/release verification
+3. gmake deps target checking specifically for guile3
+4. Experiment documenting incremental spec-driven methodology
+
+CHANGES MADE:
+1. Added experiment 000-timeout-driven-development:
+   - Documents critical practice of using timeouts
+   - Shows patterns for different operation types
+   - Includes demo Makefile with examples
+
+2. Added experiment 014-build-release-verification:
+   - Complete workflow for build/test/release
+   - Verification checklist
+   - Makefile with test targets
+
+3. Added experiment 015-incremental-spec-driven:
+   - Documents the methodology from RFC
+   - Shows how experiments led to production code
+   - Timeline and contract emergence
+
+4. Updated main Makefile:
+   - Added deps target checking for guile3
+   - Handles both 'guile3' and 'guile' commands
+   - Integrated into 'all' target for CI/CD
+
+TESTING:
+- Verified deps target works correctly
+- Checked guile3 detection logic
+- All experiments have working Makefiles
+
+EXPERIMENTS:
+These ARE the experiments - meta experiments about the experimental process
+
+DEVIATIONS:
+- Removed duplicate docs/development/experiments/00-* directory
+- All experiments now correctly under PROJECT_ROOT/experiments/
+
+FOLLOW-UP:
+- Ready for gmake push to synchronize everything
+- Version 0.5.0 tag already created
+- All components verified working
