@@ -1,0 +1,24 @@
+=== Running WITHOUT SEFACA-run ===
+;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/./scripts/01-interactive-debug.scm
+;;; WARNING: compilation of /home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/./scripts/01-interactive-debug.scm failed:
+;;; no code for module (ice-9 debugging traps)
+Backtrace:
+           9 (primitive-load "/home/jwalsh/projects/aygp-dr/ollama-t…")
+In ice-9/eval.scm:
+   721:20  8 (primitive-eval (use-modules (ice-9 debugging traps) #))
+In ice-9/psyntax.scm:
+  1262:36  7 (expand-top-sequence ((use-modules (ice-9 # traps) #)) _ …)
+  1209:24  6 (parse _ (("placeholder" placeholder)) ((top) #(# # …)) …)
+   285:10  5 (parse _ (("placeholder" placeholder)) (()) _ c&e (eval) …)
+In ice-9/boot-9.scm:
+  3377:20  4 (process-use-modules _)
+   222:17  3 (map1 (((ice-9 debugging traps)) ((ice-9 debugging #))))
+  3378:31  2 (_ ((ice-9 debugging traps)))
+   2803:6  1 (resolve-interface _ #:select _ #:hide _ #:prefix _ # _ …)
+In unknown file:
+           0 (scm-error misc-error #f "~A ~S" ("no code for modu…" …) …)
+
+ERROR: In procedure scm-error:
+no code for module (ice-9 debugging traps)

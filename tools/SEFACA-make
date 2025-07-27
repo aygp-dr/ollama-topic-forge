@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+# SEFACA-make
+
+# No args? No run
+[ $# -eq 0 ] && echo "Usage: $0 command [args...]" && exit 1
+
+L=/tmp/sm$$
+mkfifo $L.{tr,sc,o,e}
+
+# Watchers  
+tail -f $L.tr > $L-trace.log &
+tail -f $L.sc | tee $L-script.log | grep -E '(ERROR|WARNING)' &
+tail -f $L.o > $L-stdout.log &
+tail -f $L.e | awk '{print strftime("[%T]"), $0}' > $L-stderr.log &
+
+# Run
+ktrace -f $L.tr \
+  limits -t 20 -m 2097152 \
+    nice -n 19 \
+      timeout 20 \
+        time \
+          script -q $L.sc \
+            tmux new -d -s sm$$ \
+              "gmake -C ${2:-.} ${1:-all} 2>$L.e 1>$L.o"
+
+sleep 2
+tmux kill-session -t sm$$ 2>/dev/null
+echo "Logs: $L-*.log"

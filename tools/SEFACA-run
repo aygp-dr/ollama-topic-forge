@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# SEFACA-run: Just run it safer on FreeBSD
+# Usage: SEFACA-run any command you want
+
+# No args? No run
+[ $# -eq 0 ] && echo "Usage: $0 command [args...]" && exit 1
+
+# Use FreeBSD limits: -t = CPU seconds, -m = memory in KB (2GB = 2097152)
+time limits -t 20 -m 2097152 nice -n 19 "$@"

@@ -1,0 +1,1153 @@
+SEFACA-run Guile Examples Test Results
+======================================
+Timestamp: Sun Jul 27 16:54:34 EDT 2025
+
+================================================================
+TEST: Interactive Debugging Example
+Script: 01-interactive-debug.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/01-interactive-debug.scm 
+
+Running factorial with debug output:
+DEBUG: factorial(5) called
+DEBUG: factorial(4) called
+DEBUG: factorial(3) called
+DEBUG: factorial(2) called
+DEBUG: factorial(1) called
+DEBUG: factorial(1) = 1 (base case)
+DEBUG: factorial(2) = 2 * 1 = 2
+DEBUG: factorial(3) = 3 * 2 = 6
+DEBUG: factorial(4) = 4 * 6 = 24
+DEBUG: factorial(5) = 5 * 24 = 120
+
+Final result: 120
+
+Testing error handling:
+
+DEBUG: divide-with-debug(10, 2) called
+DEBUG: 10 / 2 = 5
+
+DEBUG: divide-with-debug(10, 0) called
+DEBUG: Division by zero detected!
+ERROR caught: misc-error
+ERROR details: (#f Division by zero! ~S ~S (10 0) #f)
+
+Script completed successfully!
+
+real	0m0.015s
+user	0m0.006s
+sys	0m0.009s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/01-interactive-debug.scm 
+
+Running factorial with debug output:
+DEBUG: factorial(5) called
+DEBUG: factorial(4) called
+DEBUG: factorial(3) called
+DEBUG: factorial(2) called
+DEBUG: factorial(1) called
+DEBUG: factorial(1) = 1 (base case)
+DEBUG: factorial(2) = 2 * 1 = 2
+DEBUG: factorial(3) = 3 * 2 = 6
+DEBUG: factorial(4) = 4 * 6 = 24
+DEBUG: factorial(5) = 5 * 24 = 120
+
+Final result: 120
+
+Testing error handling:
+
+DEBUG: divide-with-debug(10, 2) called
+DEBUG: 10 / 2 = 5
+
+DEBUG: divide-with-debug(10, 0) called
+DEBUG: Division by zero detected!
+ERROR caught: misc-error
+ERROR details: (#f Division by zero! ~S ~S (10 0) #f)
+
+Script completed successfully!
+        0.02 real         0.01 user         0.00 sys
+
+
+================================================================
+TEST: Dry-run Example (Execute Mode)
+Script: 02-dry-run.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm 
+
+Running in EXECUTE mode
+
+[EXECUTE] create directory: /tmp/test-dir
+[EXECUTE] delete file: /tmp/test-file.txt
+Error deleting /tmp/test-file.txt: (delete-file ~A (No such file or directory) (2))
+[EXECUTE] rename: /tmp/old-name.txt -> /tmp/new-name.txt
+Error renaming /tmp/old-name.txt: (rename-file ~A (No such file or directory) (2))
+
+Batch operations:
+[EXECUTE] create directory: /tmp/dir-0
+[EXECUTE] create directory: /tmp/dir-1
+[EXECUTE] create directory: /tmp/dir-2
+[EXECUTE] create directory: /tmp/dir-3
+[EXECUTE] create directory: /tmp/dir-4
+;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm
+;;; compiled /home/jwalsh/.cache/guile/ccache/3.0-LE-8-4.7/home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm.go
+
+real	0m0.240s
+user	0m0.166s
+sys	0m0.017s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm 
+
+Running in EXECUTE mode
+
+[EXECUTE] create directory: /tmp/test-dir
+Error creating directory /tmp/test-dir: (mkdir ~A (File exists) (17))
+[EXECUTE] delete file: /tmp/test-file.txt
+Error deleting /tmp/test-file.txt: (delete-file ~A (No such file or directory) (2))
+[EXECUTE] rename: /tmp/old-name.txt -> /tmp/new-name.txt
+Error renaming /tmp/old-name.txt: (rename-file ~A (No such file or directory) (2))
+
+Batch operations:
+[EXECUTE] create directory: /tmp/dir-0
+Error creating directory /tmp/dir-0: (mkdir ~A (File exists) (17))
+[EXECUTE] create directory: /tmp/dir-1
+Error creating directory /tmp/dir-1: (mkdir ~A (File exists) (17))
+[EXECUTE] create directory: /tmp/dir-2
+Error creating directory /tmp/dir-2: (mkdir ~A (File exists) (17))
+[EXECUTE] create directory: /tmp/dir-3
+Error creating directory /tmp/dir-3: (mkdir ~A (File exists) (17))
+[EXECUTE] create directory: /tmp/dir-4
+Error creating directory /tmp/dir-4: (mkdir ~A (File exists) (17))
+        0.01 real         0.00 user         0.01 sys
+
+
+================================================================
+TEST: Dry-run Example (Dry-run Mode)
+Script: 02-dry-run.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm --dry-run
+
+Running in DRY-RUN mode
+
+[DRY-RUN] Would create directory: /tmp/test-dir
+[DRY-RUN] Would delete file: /tmp/test-file.txt
+[DRY-RUN] Would rename: /tmp/old-name.txt -> /tmp/new-name.txt
+
+Batch operations:
+[DRY-RUN] Would create directory: /tmp/dir-0
+[DRY-RUN] Would create directory: /tmp/dir-1
+[DRY-RUN] Would create directory: /tmp/dir-2
+[DRY-RUN] Would create directory: /tmp/dir-3
+[DRY-RUN] Would create directory: /tmp/dir-4
+
+real	0m0.015s
+user	0m0.006s
+sys	0m0.008s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/02-dry-run.scm --dry-run
+
+Running in DRY-RUN mode
+
+[DRY-RUN] Would create directory: /tmp/test-dir
+[DRY-RUN] Would delete file: /tmp/test-file.txt
+[DRY-RUN] Would rename: /tmp/old-name.txt -> /tmp/new-name.txt
+
+Batch operations:
+[DRY-RUN] Would create directory: /tmp/dir-0
+[DRY-RUN] Would create directory: /tmp/dir-1
+[DRY-RUN] Would create directory: /tmp/dir-2
+[DRY-RUN] Would create directory: /tmp/dir-3
+[DRY-RUN] Would create directory: /tmp/dir-4
+        0.01 real         0.00 user         0.01 sys
+
+
+================================================================
+TEST: Directory Reader
+Script: 03-directory-reader.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/03-directory-reader.scm .
+
+Directory listing for: .
+============================================================
+Mode Size       Modified            Name
+------------------------------------------------------------
+0644 3.3KB      2025-07-27 11:13:01 2025-07-27-ollama-topic-forge-analysis.md
+0644 706B       2025-07-27 11:19:42 2025-07-27-initial.md
+0644 637B       2025-07-27 15:26:39 COMMIT_EDITMSG
+0644 21B        2025-07-27 11:09:19 HEAD
+0644 41B        2025-07-27 15:25:48 ORIG_HEAD
+0644 270B       2025-07-27 11:35:27 config
+0644 73B        2025-07-27 11:09:19 description
+0755 478B       2025-07-27 11:09:19 applypatch-msg.sample
+0755 896B       2025-07-27 11:09:19 commit-msg.sample
+0755 4.6KB      2025-07-27 11:09:19 fsmonitor-watchman.sample
+0755 189B       2025-07-27 11:09:19 post-update.sample
+0755 424B       2025-07-27 11:09:19 pre-applypatch.sample
+0755 1.6KB      2025-07-27 11:09:19 pre-commit.sample
+0755 416B       2025-07-27 11:09:19 pre-merge-commit.sample
+0755 1.3KB      2025-07-27 11:09:19 pre-push.sample
+0755 4.8KB      2025-07-27 11:09:19 pre-rebase.sample
+0755 544B       2025-07-27 11:09:19 pre-receive.sample
+0755 1.5KB      2025-07-27 11:09:19 prepare-commit-msg.sample
+0755 2.7KB      2025-07-27 11:09:19 push-to-checkout.sample
+0755 2.3KB      2025-07-27 11:09:19 sendemail-validate.sample
+0755 3.6KB      2025-07-27 11:09:19 update.sample
+0644 16.2KB     2025-07-27 15:26:39 index
+0644 240B       2025-07-27 11:09:19 exclude
+0644 1.7KB      2025-07-27 15:26:39 HEAD
+0644 1.5KB      2025-07-27 15:26:39 main
+0644 1.2KB      2025-07-27 15:27:04 commits
+0644 294B       2025-07-27 11:36:27 main
+0444 173B       2025-07-27 11:21:24 57c4e4b714b86776061e8e02c78434888f1a33
+0444 868B       2025-07-27 15:26:08 bd34e6eb35b41f254daae2ce9ffc905db116cc
+0444 657B       2025-07-27 11:17:40 1cb43281d9031baa9535eb4785ff940c60df44
+0444 935B       2025-07-27 15:27:04 c057d1f5ea76b6790e4eafcba5e86977ec3c32
+0444 2.7KB      2025-07-27 15:25:59 f4c10e1f9e0223f0ce7318e0ff2854234ff91a
+0444 3.0KB      2025-07-27 15:25:59 49b8b284f0ee171f4da6a8ccb7e676bf8a8352
+0444 1022B      2025-07-27 15:26:08 310c4d6efe4c9749ba2553e13442e892f11740
+0444 2.3KB      2025-07-27 15:26:08 4239acd7cd67bf9118f43286329dddc84f46e7
+0444 1.2KB      2025-07-27 15:26:08 a77bf98056c9323b7021680eb7792064dbc969
+0444 1.0KB      2025-07-27 11:18:12 f9dbd7acad37fe018cfed48c4baf70a16351bd
+0444 828B       2025-07-27 15:26:08 112a5c3a338bfa5b5bc46a91d4a81c11f9b27c
+0444 2.5KB      2025-07-27 11:28:28 abd9c187158b7dac3b5ab17508d84c22a87aed
+0444 467B       2025-07-27 15:26:08 2357cc535ecb2e87ad252b901877d67534b418
+0444 672B       2025-07-27 15:26:08 6129ee630a070ca436aa7dc4d334ca5d6964d5
+0444 2.6KB      2025-07-27 11:17:52 52ee33933a8832f31307eb2e24aa6f25fda26f
+0444 1.2KB      2025-07-27 15:26:08 157f7d6fd9e26069f81be04973b4ef9b12f68d
+0444 1.7KB      2025-07-27 11:17:52 ea8067f2de1dd22f48db49642bde16662eaca1
+0444 855B       2025-07-27 11:28:28 30bf8d4ac0cc5cc4a317dcf2efa8962055ff8c
+0444 60B        2025-07-27 11:18:12 31f36290ca65995e918a363f0999859b707512
+0444 755B       2025-07-27 15:26:08 b42d4622afda6bd1ec0de6a87b9ef7e8a4de90
+0444 1.2KB      2025-07-27 15:26:08 7a5c00056a7f0187f73d7cbadc4d8429b83183
+0444 508B       2025-07-27 15:26:39 d437aeac366c9755c0810c00e358dab54f4e15
+0444 889B       2025-07-27 15:26:08 d34b05d63752f7dae1644ed49b7a2dc5ff1573
+0444 1.7KB      2025-07-27 15:26:08 107aec6f9cb4adb6a428d1e24ac70e2a26b2ff
+0444 782B       2025-07-27 11:29:04 61a1be4752ed7b10e4f5d6a04caa14b6a78dfd
+0444 4.1KB      2025-07-27 15:26:08 ce78f0f715dabf53a5feef8ea5c753039ce9cb
+0444 1.4KB      2025-07-27 15:26:08 2cab47276069e2faad3a8288bfe288a3cfb4d7
+0444 213B       2025-07-27 11:34:21 9623b51dd93c015b5899422c23465ffc804d85
+0444 1.0KB      2025-07-27 11:17:52 98516b21f97f1b971d31df2a83e02f22f16f0c
+0444 54B        2025-07-27 15:26:39 208c237efbf227c4c0029fbcf560fc643d741b
+0444 280B       2025-07-27 15:26:08 5c5094b6e28c901c583d05cc4510f9c2158aff
+0444 686B       2025-07-27 11:34:38 eb03796c682c44923c4b84dededc8b61589cb5
+0444 3.4KB      2025-07-27 15:25:59 e084f3dc9f37fac132860a21631ce34205a36f
+0444 174B       2025-07-27 11:34:38 f2698d11a95d714b457374a930258cb6475e6a
+0444 2.2KB      2025-07-27 15:26:08 1390c846401994b14f1c6154cbbe70c81a487a
+0444 54B        2025-07-27 15:26:39 3b4067c9245607273a73747e6233a3f2694238
+0444 991B       2025-07-27 11:17:52 3922db77c9256e8790339a3cecf5db426a8f79
+0444 1.7KB      2025-07-27 15:26:08 4a688b3d501511a3bad35028d684d3b196d9e0
+0444 1.1KB      2025-07-27 11:19:15 79bfb3bd896c7550ddbaa5fa409b256ee3c8d7
+0444 54B        2025-07-27 11:18:12 d18bf2b40a1cc9d5c28797f5048e40cce36d9b
+0444 127B       2025-07-27 15:26:39 fc5cdd44721089ef51345520548d0f8712f4b7
+0444 851B       2025-07-27 11:17:52 7265d7abe6e6004cc1b283c599ee1db7ec0260
+0444 275B       2025-07-27 15:26:39 bef75dec65e5262dabaf43e90e84646a98bfb0
+0444 1.5KB      2025-07-27 11:17:40 5a77069dc78e1155cef017a72fca9a49e437c5
+0444 1.8KB      2025-07-27 11:28:28 be319d6d1a0e273309c0bafdd53a9860b72ef0
+0444 52B        2025-07-27 11:18:12 6f5079ff588eb9a64a41d25719538daa1eb7e1
+0444 66B        2025-07-27 11:34:21 9968e43915d898b0d109c53419074c2608e872
+0444 2.0KB      2025-07-27 11:30:26 cdfd9590b89c2b37a6add84dd09afd75765796
+0444 1.9KB      2025-07-27 15:26:08 047be16a3d09e73112cc84964e2edc4b42a204
+0444 446B       2025-07-27 11:17:52 d8d8759daab184b13dadb6ca97f200280e93c9
+0444 1.5KB      2025-07-27 15:26:08 13f84cd76df19edaf01966414fe7442d674496
+0444 531B       2025-07-27 15:26:08 1ea176afe8d959ef4ef9f5a790de558a9e1dfe
+0444 701B       2025-07-27 11:18:12 5e8c2633ec79c4aaeff259db8dd6180401f19b
+0444 2.9KB      2025-07-27 11:32:29 7e40b91d57ad6e2b57293510f8ca029e67fb80
+0444 716B       2025-07-27 15:26:08 04a3dfcbba2dca3efbe886f8150f61a448a656
+0444 690B       2025-07-27 15:26:08 797357b330542a582ce525abd223aa7a7475cc
+0444 86B        2025-07-27 11:18:12 2d1e8ba186c1632563ec4b410489805b35abef
+0444 711B       2025-07-27 15:26:08 117bedc79ce40fa60dc7269fdbc20f96d0281b
+0444 226B       2025-07-27 15:26:39 6ab564dbbe64c38bd2120b488d46a4e4336f95
+0444 391B       2025-07-27 11:28:42 209978640ea587e3fa1a4bf6bdb76eeb32e85a
+0444 377B       2025-07-27 11:34:38 47594fd33a64bc0207567ed4dd9e46b7fa1d36
+0444 3.6KB      2025-07-27 11:17:52 767a73f33a7f28e1c903f9b1948fcb0c44c9de
+0444 1.0KB      2025-07-27 11:17:52 192ecc4b05d09d20a0a34697ca51d4959ccc2d
+0444 774B       2025-07-27 15:26:08 38a99147eaa9a99e56e9673e980e5b8d16cd6d
+0444 325B       2025-07-27 11:18:12 4028e6e70cf79424e188fe3221555c1d718b8d
+0444 466B       2025-07-27 11:17:52 c641006b420aec655dca2c86d91944b8eb0a39
+0444 1.0KB      2025-07-27 11:34:22 07ce4592eb526400ea7b61f6ca795af985ff88
+0444 178B       2025-07-27 15:26:39 181ed60b1286e9329c6a76f6663d322d97a8b0
+0444 2.1KB      2025-07-27 15:26:08 a94dab11df2151e175ce049f69cc2b3a13efd7
+0444 231B       2025-07-27 15:26:39 ad1d8e6e692d97017fdd8548d582b97fae6c81
+0444 2.8KB      2025-07-27 11:30:26 b79c909f1016f1c4b98d3f75e34e606efd8761
+0444 479B       2025-07-27 11:28:28 d68a5d3431dd9401d38b14d4fd8afb2f408e64
+0444 2.4KB      2025-07-27 15:26:08 9b5c93232afce7968e3c26c4127ce6e26313a4
+0444 1.6KB      2025-07-27 15:26:08 56677010378e0bc336cfc87c46de29a13837e5
+0444 97B        2025-07-27 15:26:39 7fb5216e3c7b4da0a3e8a3aa30f773b8607564
+0444 665B       2025-07-27 15:26:08 b8474068c5d825d5f9cdd5aae07cd359d69ec2
+0444 240B       2025-07-27 15:26:08 f1724d5e1f42848c4c8d9832648688ade75cae
+0444 996B       2025-07-27 11:28:28 ee4600f4c6901137c6b9ac2675907b5cba4ee0
+0444 1.6KB      2025-07-27 11:21:02 6650ff794f42ae6fe312adf3758f1901cad9d5
+0444 357B       2025-07-27 11:18:12 27da13d7510ed081466751d01c32bec8d7ee51
+0444 150B       2025-07-27 11:19:15 12177680dd510ee241d27513d14f82e370ef53
+0444 234B       2025-07-27 15:26:39 446eac795d27dc05b1e22cb818908cabb3c393
+0444 425B       2025-07-27 11:18:12 53417e3336ece4a1b0a2dee43cb1cda5c02d8f
+0444 1.4KB      2025-07-27 15:26:08 5b223f6f2f2a889b435c1a9560c1c00cade0ba
+0444 1.1KB      2025-07-27 15:26:08 e9706cf6b5e96ec413cc3dbe8c3247958b4073
+0444 2.4KB      2025-07-27 15:26:08 a73752fd1d194c527ec19f09aa662d9bda66cf
+0444 212B       2025-07-27 15:26:08 700ffcb3304bede3b8aa9abf408dc9017d88a8
+0444 2.2KB      2025-07-27 15:26:08 7c082c1a38768970f1f0f22a0350fccdeb4951
+0444 1.7KB      2025-07-27 15:26:08 2966d772d2de850269476091af7144a9dd7b37
+0444 875B       2025-07-27 11:16:59 14e575bbbd84a89f0ee18e7b361151de3eaecf
+0444 377B       2025-07-27 11:17:52 60779a55c417b43bb03b91e27e6a46c1f1319b
+0444 3.9KB      2025-07-27 11:17:52 4660d4244269b8c7d41af16576ba9e9d4ba3c1
+0444 101B       2025-07-27 15:26:39 5537c8cde8f605d346240799c93414a6fc3f78
+0444 20B        2025-07-27 11:17:40 6aa7cb0918dc7a1cfa3635fb7f8792ac4cb218
+0444 1.2KB      2025-07-27 15:26:39 fc501dcd5d198ec125aa23dee0294b1612228b
+0444 3.0KB      2025-07-27 15:26:08 da86a3fefedcecfe100b086309c2d954e0cb3b
+0444 2.5KB      2025-07-27 15:26:08 5246a2f9d3ad00a2a05baeee893c04ddab90ad
+0444 643B       2025-07-27 15:26:08 1bfe6ccc7bf33bdf54f033562e60563519948e
+0444 238B       2025-07-27 15:26:08 c87a4ed6f87c9432ef42a195e1b9445790afc8
+0444 643B       2025-07-27 11:17:20 e558427bcd6f245721ab87c10a9179abf52713
+0444 2.4KB      2025-07-27 15:26:08 661b8a97602ce2fd62e6667cd61411e2886775
+0444 916B       2025-07-27 11:21:11 71ef2463e29293c1b5892cf946dca6d086dc66
+0444 1.3KB      2025-07-27 15:26:08 e77db47b8f30b72f604b397835bc4d8d2b21d8
+0444 213B       2025-07-27 11:21:24 bd2d7b3ede8c2206b44fc927dc7ea6f2b1c7aa
+0444 143B       2025-07-27 11:17:20 0a509b399a680e0831f0169d63a81d97be16ff
+0444 1.0KB      2025-07-27 11:28:42 1f8bb7d159ff872ed062d1db69e40741efd8cf
+0444 2.3KB      2025-07-27 11:17:52 322dbdd37d5f5ceaa5cd267cd5d0f8072b02bd
+0444 1.0KB      2025-07-27 11:30:39 48d08efffa032368534b262e4bd3672410db83
+0444 1.1KB      2025-07-27 15:25:59 3104cc2a0eaaf62975fb076f98d6e14399fe3d
+0444 54B        2025-07-27 15:26:39 a2df5362234f7c21c38e8a87de4884334ca0e7
+0444 1.1KB      2025-07-27 11:17:52 ee97a144d74db0289aafdbfb5e3bdc08e633b7
+0444 54B        2025-07-27 15:26:39 6ada47fe7e75e8f5f2fac3db1be0089e6f7389
+0444 269B       2025-07-27 15:26:39 82b2b549ccecf9d9d6591eba795c9d9aa411d1
+0444 2.9KB      2025-07-27 11:34:11 285956da4e16a71361a417a0fe826b72fc0640
+0444 172B       2025-07-27 11:31:06 99a381297276effabd56329a4dc5ba0668f855
+0444 896B       2025-07-27 11:36:15 64dcd66bd175272a59f7ad84afdc9b43dae768
+0444 391B       2025-07-27 11:30:39 97de17652622d72aa25998475d472c36c4b329
+0444 234B       2025-07-27 11:18:12 3b87884efb16f66bb65b8e9409295306cb0fd7
+0444 1.9KB      2025-07-27 15:25:59 8408d4c1391ed339f0ab95b38f5dee89bf321e
+0444 252B       2025-07-27 15:26:08 8ce67244797a27327741f0499cf5eb4ec12012
+0444 5.9KB      2025-07-27 11:17:52 e9619fee36c46a6d8c8ebd2c59fcf48be14890
+0444 1.9KB      2025-07-27 15:25:59 bcd4aeea942c0f55d6a9cfcf03d7f4e48e84c5
+0444 2.3KB      2025-07-27 15:26:08 9f330012c6008b29f7710b694fdbe40d4e233f
+0444 643B       2025-07-27 11:17:52 c52403ca2c1a5116dad6d1f21e819d400d323a
+0444 598B       2025-07-27 15:26:08 d8abac64135befa541a3c7ce9104d40c2a8685
+0444 55B        2025-07-27 11:16:59 73e3ac4ab63f969423494fabc9f4ed1c9e5a14
+0444 325B       2025-07-27 15:26:39 992fc52755f5ca073c86caf9d4a837f1117696
+0444 134B       2025-07-27 11:34:21 2c1b891ca6a005435cfc48e2c8683e8a4e98a7
+0444 2.3KB      2025-07-27 15:26:08 e8ec9e8ed0db7d9b973acd63447ff43dbb2c42
+0444 1.6KB      2025-07-27 11:33:47 a92d7d3208debbda7643a3973c1a6f3bfc2f5e
+0444 2.0KB      2025-07-27 15:25:59 5ff2212fe397026ed2d49c654663da5c16120a
+0444 53B        2025-07-27 11:18:12 e23c09fa786f49e35575acaa4b209d399b183c
+0444 86B        2025-07-27 11:28:42 4438e12565738eb81968cb9b112f9b4bb3dbae
+0444 2.7KB      2025-07-27 15:26:08 cfecc4150cf35139bb2162c6c4bfd817b1a884
+0444 1.7KB      2025-07-27 15:26:08 2a2c472d7db5e7ef9023aee2d23c0f9d421ee4
+0444 1.5KB      2025-07-27 15:26:08 4ae99666b95a111fe1130750a8790c1f61103f
+0444 318B       2025-07-27 11:31:06 9bcd81471b1bc7b6027e3b3063a9da86ceab2a
+0444 661B       2025-07-27 15:26:08 433d250ae146de866c664a1bfee52f0982d66d
+0444 701B       2025-07-27 11:33:47 620aa23b3c7185c3434efad5a13a2791fcea10
+0444 485B       2025-07-27 15:26:08 154dc5c8d300636efa8f385f097abbc444f944
+0444 3.5KB      2025-07-27 15:26:08 2201e28e266020c005655681e644c39fbc9163
+0444 1.7KB      2025-07-27 11:17:46 197241f87eb9a9de3256ed4eb1f34b2fbc2ca2
+0444 1009B      2025-07-27 15:26:08 8b75a42daa94394326b0d7db62d2da3b102d28
+0444 384B       2025-07-27 15:26:08 8071716c4d846670b83b15a7140e2ba48d3c1e
+0444 3.0KB      2025-07-27 15:26:08 63861ed96ce16f4f8cfa09802e707172f8449e
+0444 280B       2025-07-27 15:26:39 bf3297212c1f34267d17afaf7f50e4c92aa66a
+0444 266B       2025-07-27 11:29:04 1c9830799c9d737a7371601d5baf748dee0bbc
+0444 2.3KB      2025-07-27 15:26:08 7c50c4431c856fd855e364cc58f317bf4ddfdb
+0444 609B       2025-07-27 15:26:08 0ec489d58ef2c13eb0c42d111244d189043a3e
+0444 290B       2025-07-27 11:20:34 31c030f5d0262e8f42bc7e7ead9f305e0b13d5
+0444 534B       2025-07-27 15:26:39 448f8ab7341417fa30702204c9fb87704781dc
+0444 85B        2025-07-27 11:17:20 3b33193f208237fcb86b3f26b0bacc259f2af8
+0444 2.2KB      2025-07-27 15:26:08 5df64fc885ff1327c338eab397a3613448e5a9
+0444 109B       2025-07-27 15:26:39 f360c8cef942e2b3d60ac955a49055efd6ed74
+0444 202B       2025-07-27 15:26:08 b3c0b61384b2b821f7eb0897c816a0db26e253
+0444 906B       2025-07-27 15:26:39 aff2d50a571e4313f72f887ecb4cdcda9f9281
+0444 1.1KB      2025-07-27 15:26:08 38cdf014517d2e372d2766be7917b8a0ebef31
+0444 146B       2025-07-27 15:26:39 9b5d71cdfb45658b55d060f9bccbda4f9be87c
+0444 1.7KB      2025-07-27 15:25:59 3c5a0daf07dce11e91b5da3dcac386ab2f88d8
+0444 346B       2025-07-27 15:26:08 9fcfc851c7a44a6efb25c9abbe8dce728386ef
+0444 173B       2025-07-27 11:19:15 2e6a6a1ae4e110bf49ad435efd42efe00ba198
+0444 227B       2025-07-27 15:26:08 38a72aa5009cb14fb7196ff82de44460f86818
+0444 167B       2025-07-27 11:28:42 d3011058592c78b74ff6166bbac7b7beee6031
+0444 46B        2025-07-27 11:18:12 7f6acb8d95626145e8d092ac4f6a71a6f4fefb
+0444 219B       2025-07-27 15:26:08 1c8e527ac3d83837d8d8989119c0ae3c970ccc
+0444 2.9KB      2025-07-27 15:26:08 22c8fa3ba096b19f637e9527012c9902395d35
+0444 2.3KB      2025-07-27 11:17:52 955d6bdec3d9f0af76e03fc5db9c1d9e8ce397
+0444 195B       2025-07-27 15:26:08 992f35554ee057e9f251832beb1967570765ff
+0444 1.5KB      2025-07-27 15:26:08 cc4a72dac509bf5e10e55b6300f2eeafe31bbf
+0444 673B       2025-07-27 15:26:08 c14beb9c09f158ffd6abccca80eaa56281c9cc
+0444 89B        2025-07-27 15:26:39 41c6c100ad432053908e69b893a0d7d430c480
+0444 570B       2025-07-27 15:26:08 94e8ca2e9e9555a47f0893b57bcc33530a1add
+0444 54B        2025-07-27 15:26:39 a934c625f03d4b6d6be7b8338298414dc0e21a
+0444 421B       2025-07-27 11:33:47 f1216598669b858683921fd2663451f25e3d4a
+0444 880B       2025-07-27 11:17:52 8ba9ec1fb114260ab1f9009d96f28bf86fda0b
+0444 54B        2025-07-27 15:26:39 87c1054f874133b3eae169282b1c459ae6eeec
+0444 174B       2025-07-27 15:27:04 f183620ae4f564c989594293c652ba73456ffd
+0444 3.8KB      2025-07-27 15:26:08 a37bc5be785787e4a4defe64b7d1cbd3a2899d
+0444 1.7KB      2025-07-27 15:26:08 b82b6bbfcf3c21e4242a6bad395877135ca82f
+0444 447B       2025-07-27 15:26:08 bbe51e052d89497a3de3384a752b379d2070b5
+0444 54B        2025-07-27 11:34:21 4e6ed55bf98ef8a12a69dd3e2428612b622b94
+0444 1.9KB      2025-07-27 15:26:08 7a339dc7f4fe3942e5fc2b5e44bf31fbee4fef
+0444 86B        2025-07-27 15:26:39 61b7955cf4b8a651f2b4af2dc0b5f705ef42db
+0444 357B       2025-07-27 11:21:11 9411973920d10bbeaa9d24016c689b42530497
+0444 724B       2025-07-27 15:26:08 bf341fef98c3cc57169b821622fcdf49217a1a
+0444 1.1KB      2025-07-27 11:17:52 2abddd366ae1540d9a5038e7fe04cdcdbc84da
+0444 3.2KB      2025-07-27 11:17:52 3981c2bc3a7d142b11b7fc97ddf8901443fc4c
+0444 610B       2025-07-27 15:26:08 9ac63ad050f69235cfb4ae4e1afadba030e670
+0444 782B       2025-07-27 15:26:08 f02ea286749654176cc7266387716f6318caeb
+0444 86B        2025-07-27 11:34:21 87ad0eb2f10124545a40f8277a589915140045
+0444 700B       2025-07-27 15:26:08 050e6425b7dd8584eae9c915b082c1ca348092
+0444 2.4KB      2025-07-27 11:17:52 2a1c4e270fdc2e7e99601b4e287b391734b76b
+0444 758B       2025-07-27 15:26:08 82be66801be7456ecb99559547bc819a37cec1
+0444 3.4KB      2025-07-27 15:26:08 11b25c8b90ed420edf654daa5c8841cd7524b2
+0444 62B        2025-07-27 15:26:39 82dc41cf096436bcf52fa72d0fa5710e1baaa1
+0444 53B        2025-07-27 11:18:12 01425229a957e260d9e2fdeeba346431123338
+0444 271B       2025-07-27 15:26:39 950dc1bb33e784939e216aa698d5e48753532c
+0444 480B       2025-07-27 11:21:24 2378b31e1522549aebb54127796ce7d253cf3d
+0444 3.0KB      2025-07-27 15:26:08 668c62d07b7f5e18bb76f400279ccc2e9c78c6
+0444 63B        2025-07-27 11:18:12 3741060e4b47c325318ccc30630964af4bd2c8
+0444 348B       2025-07-27 11:16:38 3d33a42a3f11109e5079ef7e1a8b0a9dca5cd9
+0444 176B       2025-07-27 11:18:12 f7354b88bc480febfd9030dc06f65ff13b1c44
+0444 1.8KB      2025-07-27 15:26:08 90eb32a861c406a914e4895b9a8797f5365817
+0444 85B        2025-07-27 11:28:42 d4d520530f9f227a1653f0b1863131e77d0df3
+0444 1.5KB      2025-07-27 11:17:52 b0a6f2870350563e4fe886f5525b12b9e3aec4
+0444 681B       2025-07-27 15:26:08 dd5c8050e5d3d00c078cb2e3f95afeefb665ce
+0444 174B       2025-07-27 11:29:04 5a4cb3f8d03d90520668500b224535cb23c487
+0444 441B       2025-07-27 11:28:28 9807a8128213426715afc1209b303f9795b6be
+0444 2.0KB      2025-07-27 15:25:59 81f03441085e9408b5ac23e3a14654b95f23d0
+0444 86B        2025-07-27 11:28:42 ec6726cff8a3d1e97f3178d82f33e7197db783
+0444 881B       2025-07-27 11:31:06 70e755b5c62579d1c9ac6b50f095a3053204e6
+0444 141B       2025-07-27 15:26:39 09e3bca968dbe83b6445a99dd008647b0f72d7
+0444 53B        2025-07-27 15:26:39 30892a79d529be1d50338b737e8aef5bfbfca6
+0444 223B       2025-07-27 15:26:08 18f651d1fcab627423e61dd66cf37acce8604e
+0444 1.6KB      2025-07-27 11:28:28 70704c63802a73a57fd11b67fa16bdc7fd5428
+0444 151B       2025-07-27 15:26:08 ec5af6c717c1835b8dd95b7ce096b3d1133ca1
+0444 766B       2025-07-27 15:26:08 a38c768e5bd5290f92231454a831d3b175de15
+0444 427B       2025-07-27 15:26:08 d17a301d4a8a00a5352aab08141600b47c9450
+0444 2.0KB      2025-07-27 11:36:15 67968c3a04558ee4aa6d00c5576314f93073a0
+0444 389B       2025-07-27 11:36:15 d802f4d619fcf006038dde0417c74744eedc52
+0444 86B        2025-07-27 15:26:39 feeef793c92adb040f4ec6c92d61b5572e4b86
+0444 2.2KB      2025-07-27 15:26:08 1b9771500ee797b31b93b73abecdb0de1d23b6
+0444 1.2KB      2025-07-27 15:26:08 73582504f1465cf9f4f4381b64d9b7d43306c6
+0444 5.8KB      2025-07-27 11:17:52 c13b5b54d2d6d4e2dc2b9f5c852d12cee1fe13
+0444 390B       2025-07-27 11:34:21 b71df3dc94d20624b2cdbb9550e51109f99318
+0444 1.6KB      2025-07-27 15:26:08 9fa9751f2e413e38da2ebee5baabd69ecb32f6
+0444 426B       2025-07-27 15:27:04 6266546e8a92d4c744b6e8f5f85fe15b9f0672
+0444 2.6KB      2025-07-27 11:17:40 26b825f349661afe89d3c3c3b1ea599c19ef95
+0444 474B       2025-07-27 15:26:08 6569d99c64cb17998e39f679bb047937ad5752
+0644 41B        2025-07-27 15:26:39 main
+0644 41B        2025-07-27 15:27:04 commits
+0644 41B        2025-07-27 11:36:27 main
+0644 41B        2025-07-27 11:20:34 v0.5.0
+0644 562B       2025-07-27 11:16:31 .gitignore
+0644 3.8KB      2025-07-27 11:47:48 CONTRIBUTING.md
+0644 1.0KB      2025-07-27 10:51:48 LICENSE
+0644 5.4KB      2025-07-27 11:46:58 Makefile
+0644 8.4KB      2025-07-27 15:25:11 README.md
+0644 3.8KB      2025-07-27 11:38:22 RELEASE-NOTES-v0.5.0.md
+0644 3.5KB      2025-07-27 11:37:34 RELEASE-PLAN.md
+0644 4.1KB      2025-07-27 11:48:33 SECURITY.md
+0644 5B         2025-07-27 10:51:09 VERSION
+0755 17.6KB     2025-07-27 11:19:51 ollama-topic-forge
+0644 98B        2025-07-27 11:39:33 checksums.txt
+0644 129.0KB    2025-07-27 11:39:27 ollama-topic-forge-0.5.0.tar.gz
+0644 7.2KB      2025-07-27 12:26:04 GETTING-STARTED.md
+0644 5.2KB      2025-07-27 10:52:45 METHODOLOGY.md
+0644 4.8KB      2025-07-27 10:50:24 citations.md
+0644 12.8KB     2025-07-27 10:50:24 rfc-experimental-engineering.md
+0644 885B       2025-07-27 11:24:39 Makefile
+0644 3.6KB      2025-07-27 11:24:27 README.md
+0644 1.2KB      2025-07-27 10:50:31 Makefile
+0644 2.3KB      2025-07-27 10:50:31 README.md
+0755 5.0KB      2025-07-27 10:50:31 baseline-curl.sh
+0644 1.0KB      2025-07-27 10:50:31 models-list.json
+0644 812B       2025-07-27 10:50:31 test-structured-lean4-parsed.json
+0644 1.1KB      2025-07-27 10:50:31 test-structured-lean4.json
+0644 355B       2025-07-27 10:50:31 test-structured-simple-parsed.json
+0644 643B       2025-07-27 10:50:31 test-structured-simple.json
+0644 1.6KB      2025-07-27 10:50:31 test-unstructured.json
+0755 7.3KB      2025-07-27 10:50:31 run-experiment.sh
+0644 1.1KB      2025-07-27 10:50:31 repo-metadata.json
+0644 3.5KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.7KB      2025-07-27 10:50:31 Makefile
+0644 1.4KB      2025-07-27 10:50:31 README.md
+0755 514B       2025-07-27 10:50:31 debug-ollama.scm
+0755 4.7KB      2025-07-27 10:50:31 ollama-structured-v2.scm
+0755 9.7KB      2025-07-27 10:50:31 ollama-structured.scm
+0644 1.3KB      2025-07-27 10:50:31 Makefile
+0644 2.6KB      2025-07-27 10:50:31 README.md
+0644 2.0KB      2025-07-27 10:50:31 example-schemas.scm
+0755 9.5KB      2025-07-27 10:50:31 spec-json-converter.scm
+0644 2.3KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.8KB      2025-07-27 10:50:31 Makefile
+0644 1.4KB      2025-07-27 10:50:31 README.md
+0755 6.2KB      2025-07-27 10:50:31 github-client.scm
+0755 4.9KB      2025-07-27 10:50:31 pagination-test.scm
+0755 3.8KB      2025-07-27 10:50:31 rate-limit-test.scm
+0644 1.6KB      2025-07-27 10:50:31 github-repo-spec.scm
+0644 2.9KB      2025-07-27 10:50:31 github-search-spec.scm
+0644 1.5KB      2025-07-27 10:50:31 github-user-spec.scm
+0644 2.9KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.6KB      2025-07-27 10:50:31 Makefile
+0644 1.3KB      2025-07-27 10:50:31 README.md
+0644 9.1KB      2025-07-27 10:50:31 github-validation.scm
+0644 5.8KB      2025-07-27 10:50:31 ollama-validation.scm
+0644 6.3KB      2025-07-27 10:50:31 spec-registry.scm
+0755 9.1KB      2025-07-27 10:50:31 validation-tests.scm
+0755 10.7KB     2025-07-27 10:50:31 validator.scm
+0644 3.5KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.5KB      2025-07-27 10:50:31 Makefile
+0644 2.6KB      2025-07-27 10:50:31 README.md
+0644 6.4KB      2025-07-27 10:50:31 github-ollama-flow.md
+0644 10.2KB     2025-07-27 10:50:31 repo-analyzer.scm
+0755 11.8KB     2025-07-27 10:50:31 workflow-engine.scm
+0644 4.5KB      2025-07-27 10:50:31 code-review-workflow.scm
+0644 8.6KB      2025-07-27 10:50:31 data-pipeline-workflow.scm
+0644 5.0KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.5KB      2025-07-27 10:50:31 Makefile
+0644 940B       2025-07-27 10:50:31 README.md
+0644 11.0KB     2025-07-27 10:50:31 github-client-v2.scm
+0755 11.1KB     2025-07-27 10:50:31 simulator.scm
+0644 11.8KB     2025-07-27 10:50:31 topic-generator.scm
+0755 2.5KB      2025-07-27 10:50:31 validate-topics.sh
+0644 3.3KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.6KB      2025-07-27 10:50:31 Makefile
+0644 1.8KB      2025-07-27 10:50:31 README.md
+0644 1.8KB      2025-07-27 10:50:31 SUMMARY.md
+0755 4.6KB      2025-07-27 10:50:31 capture-ollama-samples.sh
+0644 5.5KB      2025-07-27 10:50:31 custom-json-parser.scm
+0644 5.9KB      2025-07-27 10:50:31 json-parser-proper.scm
+0644 6.1KB      2025-07-27 10:50:31 ollama-response-samples.md
+0644 401B       2025-07-27 10:50:31 01-simple-topics.json
+0644 256B       2025-07-27 10:50:31 02-topics-with-hyphens.json
+0644 183B       2025-07-27 10:50:31 03-topics-with-numbers.json
+0644 5.1KB      2025-07-27 10:50:31 test-json-options.scm
+0644 786B       2025-07-27 10:50:31 test-ollama-response.scm
+0644 1.7KB      2025-07-27 10:50:31 test-simple-json.scm
+0644 1.6KB      2025-07-27 10:50:31 test-simple-parse.scm
+0644 3.2KB      2025-07-27 10:50:31 test-with-samples.scm
+0644 1.4KB      2025-07-27 15:25:18 Makefile
+0644 1.5KB      2025-07-27 10:50:31 README.md
+0644 2.8KB      2025-07-27 10:50:31 SUMMARY.md
+0755 4.7KB      2025-07-27 10:50:31 capture-llama-responses.sh
+0644 10.8KB     2025-07-27 10:50:31 json-validator.scm
+0644 3.7KB      2025-07-27 10:50:31 ollama-schemas.json
+0644 6.5KB      2025-07-27 10:50:31 parsing-examples.md
+0644 7.1KB      2025-07-27 10:50:31 validate-responses.scm
+0644 457B       2025-07-27 10:50:31 README.md
+0644 369B       2025-07-27 10:50:31 README.md
+0644 389B       2025-07-27 10:50:31 README.md
+0644 383B       2025-07-27 10:50:31 README.md
+0644 1.1KB      2025-07-27 11:25:24 Makefile
+0644 2.1KB      2025-07-27 11:25:11 README.md
+0644 2.0KB      2025-07-27 11:28:01 Makefile
+0644 5.8KB      2025-07-27 11:27:42 README.md
+0644 1.5KB      2025-07-27 11:33:31 Makefile
+0644 3.8KB      2025-07-27 11:33:17 README.md
+0644 1.1KB      2025-07-27 11:44:51 Makefile
+0644 5.3KB     ;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/03-directory-reader.scm
+;;; compiled /home/jwalsh/.cache/guile/ccache/3.0-LE-8-4.7/home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/03-directory-reader.scm.go
+ 2025-07-27 11:44:38 README.md
+0644 1.4KB      2025-07-27 11:46:18 Makefile
+0644 4.0KB      2025-07-27 11:46:04 README.md
+0644 325B       2025-07-27 10:50:31 README.md
+0644 357B       2025-07-27 10:50:31 README.md
+0644 353B       2025-07-27 10:50:31 README.md
+0644 2.4KB      2025-07-27 15:34:50 Makefile
+0644 6.6KB      2025-07-27 15:34:22 README.md
+0644 2.2KB      2025-07-27 15:39:45 Makefile
+0644 10.3KB     2025-07-27 15:39:26 README.md
+0644 9.1KB      2025-07-27 15:38:09 README.md
+0644 3.6KB      2025-07-27 15:38:58 README.md
+0644 4.7KB      2025-07-27 15:44:27 Makefile
+0644 12.6KB     2025-07-27 15:43:56 README.md
+0644 7.9KB      2025-07-27 15:57:22 Makefile
+0644 17.1KB     2025-07-27 15:56:34 README.md
+0644 6.0KB      2025-07-27 16:54:34 all-tests-20250727-165434.txt
+0644 1.3KB      2025-07-27 16:50:19 test-01-debug-20250727-165019.txt
+0644 1.6KB      2025-07-27 16:52:03 test-results-20250727-165203.txt
+0755 2.4KB      2025-07-27 16:53:29 run-all-tests.sh
+0755 1.4KB      2025-07-27 16:53:09 01-interactive-debug.scm
+0755 2.2KB      2025-07-27 16:30:27 02-dry-run.scm
+0755 2.1KB      2025-07-27 16:30:54 03-directory-reader.scm
+0755 5.8KB      2025-07-27 16:31:36 04-disk-space-analyzer.scm
+0755 3.4KB      2025-07-27 16:32:09 05-letter-frequency.scm
+0755 2.9KB      2025-07-27 11:42:47 deps.sh
+0755 9.1KB      2025-07-27 10:53:27 validate-all.sh
+0644 2.3KB      2025-07-27 10:50:24 TopicsDisplay.tla
+0644 15.8KB     2025-07-27 10:50:24 api-specs.json
+0644 10.1KB     2025-07-27 10:50:24 debug-monitoring-spec.md
+0644 6.4KB      2025-07-27 10:50:24 ollama-generate-openapi.yaml
+0644 2.3KB      2025-07-27 10:50:24 property-tests.md
+0644 6.5KB      2025-07-27 10:50:24 repo-topic-generator-spec.md
+0644 9.7KB      2025-07-27 10:50:24 system-contracts.md
+0644 982B       2025-07-27 10:50:24 topics-format.ebnf
+0644 1.0KB      2025-07-27 10:50:24 topics-schema.json
+0755 7.3KB      2025-07-27 10:50:24 validate-topics.py
+0755 17.6KB     2025-07-27 10:50:03 ollama-topic-forge
+0644 621B       2025-07-27 10:52:13 Makefile
+0644 2.9KB      2025-07-27 10:50:09 test-environment.scm
+0644 4.4KB      2025-07-27 10:50:09 test-integration.scm
+0644 3.9KB      2025-07-27 10:50:09 test-parsing.scm
+0755 2.3KB      2025-07-27 10:50:09 test-runner.scm
+0644 3.7KB      2025-07-27 10:50:09 test-validation.scm
+0644 646B       2025-07-27 16:37:07 SEFACA-make
+0644 566B       2025-07-27 16:16:35 SEFACA-make~
+0755 301B       2025-07-27 16:07:07 SEFACA-run
+------------------------------------------------------------
+Total files: 413
+Total size: 1.0MB
+
+real	0m0.244s
+user	0m0.224s
+sys	0m0.023s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/03-directory-reader.scm .
+
+Directory listing for: .
+============================================================
+Mode Size       Modified            Name
+------------------------------------------------------------
+0644 3.3KB      2025-07-27 11:13:01 2025-07-27-ollama-topic-forge-analysis.md
+0644 706B       2025-07-27 11:19:42 2025-07-27-initial.md
+0644 637B       2025-07-27 15:26:39 COMMIT_EDITMSG
+0644 21B        2025-07-27 11:09:19 HEAD
+0644 41B        2025-07-27 15:25:48 ORIG_HEAD
+0644 270B       2025-07-27 11:35:27 config
+0644 73B        2025-07-27 11:09:19 description
+0755 478B       2025-07-27 11:09:19 applypatch-msg.sample
+0755 896B       2025-07-27 11:09:19 commit-msg.sample
+0755 4.6KB      2025-07-27 11:09:19 fsmonitor-watchman.sample
+0755 189B       2025-07-27 11:09:19 post-update.sample
+0755 424B       2025-07-27 11:09:19 pre-applypatch.sample
+0755 1.6KB      2025-07-27 11:09:19 pre-commit.sample
+0755 416B       2025-07-27 11:09:19 pre-merge-commit.sample
+0755 1.3KB      2025-07-27 11:09:19 pre-push.sample
+0755 4.8KB      2025-07-27 11:09:19 pre-rebase.sample
+0755 544B       2025-07-27 11:09:19 pre-receive.sample
+0755 1.5KB      2025-07-27 11:09:19 prepare-commit-msg.sample
+0755 2.7KB      2025-07-27 11:09:19 push-to-checkout.sample
+0755 2.3KB      2025-07-27 11:09:19 sendemail-validate.sample
+0755 3.6KB      2025-07-27 11:09:19 update.sample
+0644 16.2KB     2025-07-27 15:26:39 index
+0644 240B       2025-07-27 11:09:19 exclude
+0644 1.7KB      2025-07-27 15:26:39 HEAD
+0644 1.5KB      2025-07-27 15:26:39 main
+0644 1.2KB      2025-07-27 15:27:04 commits
+0644 294B       2025-07-27 11:36:27 main
+0444 173B       2025-07-27 11:21:24 57c4e4b714b86776061e8e02c78434888f1a33
+0444 868B       2025-07-27 15:26:08 bd34e6eb35b41f254daae2ce9ffc905db116cc
+0444 657B       2025-07-27 11:17:40 1cb43281d9031baa9535eb4785ff940c60df44
+0444 935B       2025-07-27 15:27:04 c057d1f5ea76b6790e4eafcba5e86977ec3c32
+0444 2.7KB      2025-07-27 15:25:59 f4c10e1f9e0223f0ce7318e0ff2854234ff91a
+0444 3.0KB      2025-07-27 15:25:59 49b8b284f0ee171f4da6a8ccb7e676bf8a8352
+0444 1022B      2025-07-27 15:26:08 310c4d6efe4c9749ba2553e13442e892f11740
+0444 2.3KB      2025-07-27 15:26:08 4239acd7cd67bf9118f43286329dddc84f46e7
+0444 1.2KB      2025-07-27 15:26:08 a77bf98056c9323b7021680eb7792064dbc969
+0444 1.0KB      2025-07-27 11:18:12 f9dbd7acad37fe018cfed48c4baf70a16351bd
+0444 828B       2025-07-27 15:26:08 112a5c3a338bfa5b5bc46a91d4a81c11f9b27c
+0444 2.5KB      2025-07-27 11:28:28 abd9c187158b7dac3b5ab17508d84c22a87aed
+0444 467B       2025-07-27 15:26:08 2357cc535ecb2e87ad252b901877d67534b418
+0444 672B       2025-07-27 15:26:08 6129ee630a070ca436aa7dc4d334ca5d6964d5
+0444 2.6KB      2025-07-27 11:17:52 52ee33933a8832f31307eb2e24aa6f25fda26f
+0444 1.2KB      2025-07-27 15:26:08 157f7d6fd9e26069f81be04973b4ef9b12f68d
+0444 1.7KB      2025-07-27 11:17:52 ea8067f2de1dd22f48db49642bde16662eaca1
+0444 855B       2025-07-27 11:28:28 30bf8d4ac0cc5cc4a317dcf2efa8962055ff8c
+0444 60B        2025-07-27 11:18:12 31f36290ca65995e918a363f0999859b707512
+0444 755B       2025-07-27 15:26:08 b42d4622afda6bd1ec0de6a87b9ef7e8a4de90
+0444 1.2KB      2025-07-27 15:26:08 7a5c00056a7f0187f73d7cbadc4d8429b83183
+0444 508B       2025-07-27 15:26:39 d437aeac366c9755c0810c00e358dab54f4e15
+0444 889B       2025-07-27 15:26:08 d34b05d63752f7dae1644ed49b7a2dc5ff1573
+0444 1.7KB      2025-07-27 15:26:08 107aec6f9cb4adb6a428d1e24ac70e2a26b2ff
+0444 782B       2025-07-27 11:29:04 61a1be4752ed7b10e4f5d6a04caa14b6a78dfd
+0444 4.1KB      2025-07-27 15:26:08 ce78f0f715dabf53a5feef8ea5c753039ce9cb
+0444 1.4KB      2025-07-27 15:26:08 2cab47276069e2faad3a8288bfe288a3cfb4d7
+0444 213B       2025-07-27 11:34:21 9623b51dd93c015b5899422c23465ffc804d85
+0444 1.0KB      2025-07-27 11:17:52 98516b21f97f1b971d31df2a83e02f22f16f0c
+0444 54B        2025-07-27 15:26:39 208c237efbf227c4c0029fbcf560fc643d741b
+0444 280B       2025-07-27 15:26:08 5c5094b6e28c901c583d05cc4510f9c2158aff
+0444 686B       2025-07-27 11:34:38 eb03796c682c44923c4b84dededc8b61589cb5
+0444 3.4KB      2025-07-27 15:25:59 e084f3dc9f37fac132860a21631ce34205a36f
+0444 174B       2025-07-27 11:34:38 f2698d11a95d714b457374a930258cb6475e6a
+0444 2.2KB      2025-07-27 15:26:08 1390c846401994b14f1c6154cbbe70c81a487a
+0444 54B        2025-07-27 15:26:39 3b4067c9245607273a73747e6233a3f2694238
+0444 991B       2025-07-27 11:17:52 3922db77c9256e8790339a3cecf5db426a8f79
+0444 1.7KB      2025-07-27 15:26:08 4a688b3d501511a3bad35028d684d3b196d9e0
+0444 1.1KB      2025-07-27 11:19:15 79bfb3bd896c7550ddbaa5fa409b256ee3c8d7
+0444 54B        2025-07-27 11:18:12 d18bf2b40a1cc9d5c28797f5048e40cce36d9b
+0444 127B       2025-07-27 15:26:39 fc5cdd44721089ef51345520548d0f8712f4b7
+0444 851B       2025-07-27 11:17:52 7265d7abe6e6004cc1b283c599ee1db7ec0260
+0444 275B       2025-07-27 15:26:39 bef75dec65e5262dabaf43e90e84646a98bfb0
+0444 1.5KB      2025-07-27 11:17:40 5a77069dc78e1155cef017a72fca9a49e437c5
+0444 1.8KB      2025-07-27 11:28:28 be319d6d1a0e273309c0bafdd53a9860b72ef0
+0444 52B        2025-07-27 11:18:12 6f5079ff588eb9a64a41d25719538daa1eb7e1
+0444 66B        2025-07-27 11:34:21 9968e43915d898b0d109c53419074c2608e872
+0444 2.0KB      2025-07-27 11:30:26 cdfd9590b89c2b37a6add84dd09afd75765796
+0444 1.9KB      2025-07-27 15:26:08 047be16a3d09e73112cc84964e2edc4b42a204
+0444 446B       2025-07-27 11:17:52 d8d8759daab184b13dadb6ca97f200280e93c9
+0444 1.5KB      2025-07-27 15:26:08 13f84cd76df19edaf01966414fe7442d674496
+0444 531B       2025-07-27 15:26:08 1ea176afe8d959ef4ef9f5a790de558a9e1dfe
+0444 701B       2025-07-27 11:18:12 5e8c2633ec79c4aaeff259db8dd6180401f19b
+0444 2.9KB      2025-07-27 11:32:29 7e40b91d57ad6e2b57293510f8ca029e67fb80
+0444 716B       2025-07-27 15:26:08 04a3dfcbba2dca3efbe886f8150f61a448a656
+0444 690B       2025-07-27 15:26:08 797357b330542a582ce525abd223aa7a7475cc
+0444 86B        2025-07-27 11:18:12 2d1e8ba186c1632563ec4b410489805b35abef
+0444 711B       2025-07-27 15:26:08 117bedc79ce40fa60dc7269fdbc20f96d0281b
+0444 226B       2025-07-27 15:26:39 6ab564dbbe64c38bd2120b488d46a4e4336f95
+0444 391B       2025-07-27 11:28:42 209978640ea587e3fa1a4bf6bdb76eeb32e85a
+0444 377B       2025-07-27 11:34:38 47594fd33a64bc0207567ed4dd9e46b7fa1d36
+0444 3.6KB      2025-07-27 11:17:52 767a73f33a7f28e1c903f9b1948fcb0c44c9de
+0444 1.0KB      2025-07-27 11:17:52 192ecc4b05d09d20a0a34697ca51d4959ccc2d
+0444 774B       2025-07-27 15:26:08 38a99147eaa9a99e56e9673e980e5b8d16cd6d
+0444 325B       2025-07-27 11:18:12 4028e6e70cf79424e188fe3221555c1d718b8d
+0444 466B       2025-07-27 11:17:52 c641006b420aec655dca2c86d91944b8eb0a39
+0444 1.0KB      2025-07-27 11:34:22 07ce4592eb526400ea7b61f6ca795af985ff88
+0444 178B       2025-07-27 15:26:39 181ed60b1286e9329c6a76f6663d322d97a8b0
+0444 2.1KB      2025-07-27 15:26:08 a94dab11df2151e175ce049f69cc2b3a13efd7
+0444 231B       2025-07-27 15:26:39 ad1d8e6e692d97017fdd8548d582b97fae6c81
+0444 2.8KB      2025-07-27 11:30:26 b79c909f1016f1c4b98d3f75e34e606efd8761
+0444 479B       2025-07-27 11:28:28 d68a5d3431dd9401d38b14d4fd8afb2f408e64
+0444 2.4KB      2025-07-27 15:26:08 9b5c93232afce7968e3c26c4127ce6e26313a4
+0444 1.6KB      2025-07-27 15:26:08 56677010378e0bc336cfc87c46de29a13837e5
+0444 97B        2025-07-27 15:26:39 7fb5216e3c7b4da0a3e8a3aa30f773b8607564
+0444 665B       2025-07-27 15:26:08 b8474068c5d825d5f9cdd5aae07cd359d69ec2
+0444 240B       2025-07-27 15:26:08 f1724d5e1f42848c4c8d9832648688ade75cae
+0444 996B       2025-07-27 11:28:28 ee4600f4c6901137c6b9ac2675907b5cba4ee0
+0444 1.6KB      2025-07-27 11:21:02 6650ff794f42ae6fe312adf3758f1901cad9d5
+0444 357B       2025-07-27 11:18:12 27da13d7510ed081466751d01c32bec8d7ee51
+0444 150B       2025-07-27 11:19:15 12177680dd510ee241d27513d14f82e370ef53
+0444 234B       2025-07-27 15:26:39 446eac795d27dc05b1e22cb818908cabb3c393
+0444 425B       2025-07-27 11:18:12 53417e3336ece4a1b0a2dee43cb1cda5c02d8f
+0444 1.4KB      2025-07-27 15:26:08 5b223f6f2f2a889b435c1a9560c1c00cade0ba
+0444 1.1KB      2025-07-27 15:26:08 e9706cf6b5e96ec413cc3dbe8c3247958b4073
+0444 2.4KB      2025-07-27 15:26:08 a73752fd1d194c527ec19f09aa662d9bda66cf
+0444 212B       2025-07-27 15:26:08 700ffcb3304bede3b8aa9abf408dc9017d88a8
+0444 2.2KB      2025-07-27 15:26:08 7c082c1a38768970f1f0f22a0350fccdeb4951
+0444 1.7KB      2025-07-27 15:26:08 2966d772d2de850269476091af7144a9dd7b37
+0444 875B       2025-07-27 11:16:59 14e575bbbd84a89f0ee18e7b361151de3eaecf
+0444 377B       2025-07-27 11:17:52 60779a55c417b43bb03b91e27e6a46c1f1319b
+0444 3.9KB      2025-07-27 11:17:52 4660d4244269b8c7d41af16576ba9e9d4ba3c1
+0444 101B       2025-07-27 15:26:39 5537c8cde8f605d346240799c93414a6fc3f78
+0444 20B        2025-07-27 11:17:40 6aa7cb0918dc7a1cfa3635fb7f8792ac4cb218
+0444 1.2KB      2025-07-27 15:26:39 fc501dcd5d198ec125aa23dee0294b1612228b
+0444 3.0KB      2025-07-27 15:26:08 da86a3fefedcecfe100b086309c2d954e0cb3b
+0444 2.5KB      2025-07-27 15:26:08 5246a2f9d3ad00a2a05baeee893c04ddab90ad
+0444 643B       2025-07-27 15:26:08 1bfe6ccc7bf33bdf54f033562e60563519948e
+0444 238B       2025-07-27 15:26:08 c87a4ed6f87c9432ef42a195e1b9445790afc8
+0444 643B       2025-07-27 11:17:20 e558427bcd6f245721ab87c10a9179abf52713
+0444 2.4KB      2025-07-27 15:26:08 661b8a97602ce2fd62e6667cd61411e2886775
+0444 916B       2025-07-27 11:21:11 71ef2463e29293c1b5892cf946dca6d086dc66
+0444 1.3KB      2025-07-27 15:26:08 e77db47b8f30b72f604b397835bc4d8d2b21d8
+0444 213B       2025-07-27 11:21:24 bd2d7b3ede8c2206b44fc927dc7ea6f2b1c7aa
+0444 143B       2025-07-27 11:17:20 0a509b399a680e0831f0169d63a81d97be16ff
+0444 1.0KB      2025-07-27 11:28:42 1f8bb7d159ff872ed062d1db69e40741efd8cf
+0444 2.3KB      2025-07-27 11:17:52 322dbdd37d5f5ceaa5cd267cd5d0f8072b02bd
+0444 1.0KB      2025-07-27 11:30:39 48d08efffa032368534b262e4bd3672410db83
+0444 1.1KB      2025-07-27 15:25:59 3104cc2a0eaaf62975fb076f98d6e14399fe3d
+0444 54B        2025-07-27 15:26:39 a2df5362234f7c21c38e8a87de4884334ca0e7
+0444 1.1KB      2025-07-27 11:17:52 ee97a144d74db0289aafdbfb5e3bdc08e633b7
+0444 54B        2025-07-27 15:26:39 6ada47fe7e75e8f5f2fac3db1be0089e6f7389
+0444 269B       2025-07-27 15:26:39 82b2b549ccecf9d9d6591eba795c9d9aa411d1
+0444 2.9KB      2025-07-27 11:34:11 285956da4e16a71361a417a0fe826b72fc0640
+0444 172B       2025-07-27 11:31:06 99a381297276effabd56329a4dc5ba0668f855
+0444 896B       2025-07-27 11:36:15 64dcd66bd175272a59f7ad84afdc9b43dae768
+0444 391B       2025-07-27 11:30:39 97de17652622d72aa25998475d472c36c4b329
+0444 234B       2025-07-27 11:18:12 3b87884efb16f66bb65b8e9409295306cb0fd7
+0444 1.9KB      2025-07-27 15:25:59 8408d4c1391ed339f0ab95b38f5dee89bf321e
+0444 252B       2025-07-27 15:26:08 8ce67244797a27327741f0499cf5eb4ec12012
+0444 5.9KB      2025-07-27 11:17:52 e9619fee36c46a6d8c8ebd2c59fcf48be14890
+0444 1.9KB      2025-07-27 15:25:59 bcd4aeea942c0f55d6a9cfcf03d7f4e48e84c5
+0444 2.3KB      2025-07-27 15:26:08 9f330012c6008b29f7710b694fdbe40d4e233f
+0444 643B       2025-07-27 11:17:52 c52403ca2c1a5116dad6d1f21e819d400d323a
+0444 598B       2025-07-27 15:26:08 d8abac64135befa541a3c7ce9104d40c2a8685
+0444 55B        2025-07-27 11:16:59 73e3ac4ab63f969423494fabc9f4ed1c9e5a14
+0444 325B       2025-07-27 15:26:39 992fc52755f5ca073c86caf9d4a837f1117696
+0444 134B       2025-07-27 11:34:21 2c1b891ca6a005435cfc48e2c8683e8a4e98a7
+0444 2.3KB      2025-07-27 15:26:08 e8ec9e8ed0db7d9b973acd63447ff43dbb2c42
+0444 1.6KB      2025-07-27 11:33:47 a92d7d3208debbda7643a3973c1a6f3bfc2f5e
+0444 2.0KB      2025-07-27 15:25:59 5ff2212fe397026ed2d49c654663da5c16120a
+0444 53B        2025-07-27 11:18:12 e23c09fa786f49e35575acaa4b209d399b183c
+0444 86B        2025-07-27 11:28:42 4438e12565738eb81968cb9b112f9b4bb3dbae
+0444 2.7KB      2025-07-27 15:26:08 cfecc4150cf35139bb2162c6c4bfd817b1a884
+0444 1.7KB      2025-07-27 15:26:08 2a2c472d7db5e7ef9023aee2d23c0f9d421ee4
+0444 1.5KB      2025-07-27 15:26:08 4ae99666b95a111fe1130750a8790c1f61103f
+0444 318B       2025-07-27 11:31:06 9bcd81471b1bc7b6027e3b3063a9da86ceab2a
+0444 661B       2025-07-27 15:26:08 433d250ae146de866c664a1bfee52f0982d66d
+0444 701B       2025-07-27 11:33:47 620aa23b3c7185c3434efad5a13a2791fcea10
+0444 485B       2025-07-27 15:26:08 154dc5c8d300636efa8f385f097abbc444f944
+0444 3.5KB      2025-07-27 15:26:08 2201e28e266020c005655681e644c39fbc9163
+0444 1.7KB      2025-07-27 11:17:46 197241f87eb9a9de3256ed4eb1f34b2fbc2ca2
+0444 1009B      2025-07-27 15:26:08 8b75a42daa94394326b0d7db62d2da3b102d28
+0444 384B       2025-07-27 15:26:08 8071716c4d846670b83b15a7140e2ba48d3c1e
+0444 3.0KB      2025-07-27 15:26:08 63861ed96ce16f4f8cfa09802e707172f8449e
+0444 280B       2025-07-27 15:26:39 bf3297212c1f34267d17afaf7f50e4c92aa66a
+0444 266B       2025-07-27 11:29:04 1c9830799c9d737a7371601d5baf748dee0bbc
+0444 2.3KB      2025-07-27 15:26:08 7c50c4431c856fd855e364cc58f317bf4ddfdb
+0444 609B       2025-07-27 15:26:08 0ec489d58ef2c13eb0c42d111244d189043a3e
+0444 290B       2025-07-27 11:20:34 31c030f5d0262e8f42bc7e7ead9f305e0b13d5
+0444 534B       2025-07-27 15:26:39 448f8ab7341417fa30702204c9fb87704781dc
+0444 85B        2025-07-27 11:17:20 3b33193f208237fcb86b3f26b0bacc259f2af8
+0444 2.2KB      2025-07-27 15:26:08 5df64fc885ff1327c338eab397a3613448e5a9
+0444 109B       2025-07-27 15:26:39 f360c8cef942e2b3d60ac955a49055efd6ed74
+0444 202B       2025-07-27 15:26:08 b3c0b61384b2b821f7eb0897c816a0db26e253
+0444 906B       2025-07-27 15:26:39 aff2d50a571e4313f72f887ecb4cdcda9f9281
+0444 1.1KB      2025-07-27 15:26:08 38cdf014517d2e372d2766be7917b8a0ebef31
+0444 146B       2025-07-27 15:26:39 9b5d71cdfb45658b55d060f9bccbda4f9be87c
+0444 1.7KB      2025-07-27 15:25:59 3c5a0daf07dce11e91b5da3dcac386ab2f88d8
+0444 346B       2025-07-27 15:26:08 9fcfc851c7a44a6efb25c9abbe8dce728386ef
+0444 173B       2025-07-27 11:19:15 2e6a6a1ae4e110bf49ad435efd42efe00ba198
+0444 227B       2025-07-27 15:26:08 38a72aa5009cb14fb7196ff82de44460f86818
+0444 167B       2025-07-27 11:28:42 d3011058592c78b74ff6166bbac7b7beee6031
+0444 46B        2025-07-27 11:18:12 7f6acb8d95626145e8d092ac4f6a71a6f4fefb
+0444 219B       2025-07-27 15:26:08 1c8e527ac3d83837d8d8989119c0ae3c970ccc
+0444 2.9KB      2025-07-27 15:26:08 22c8fa3ba096b19f637e9527012c9902395d35
+0444 2.3KB      2025-07-27 11:17:52 955d6bdec3d9f0af76e03fc5db9c1d9e8ce397
+0444 195B       2025-07-27 15:26:08 992f35554ee057e9f251832beb1967570765ff
+0444 1.5KB      2025-07-27 15:26:08 cc4a72dac509bf5e10e55b6300f2eeafe31bbf
+0444 673B       2025-07-27 15:26:08 c14beb9c09f158ffd6abccca80eaa56281c9cc
+0444 89B        2025-07-27 15:26:39 41c6c100ad432053908e69b893a0d7d430c480
+0444 570B       2025-07-27 15:26:08 94e8ca2e9e9555a47f0893b57bcc33530a1add
+0444 54B        2025-07-27 15:26:39 a934c625f03d4b6d6be7b8338298414dc0e21a
+0444 421B       2025-07-27 11:33:47 f1216598669b858683921fd2663451f25e3d4a
+0444 880B       2025-07-27 11:17:52 8ba9ec1fb114260ab1f9009d96f28bf86fda0b
+0444 54B        2025-07-27 15:26:39 87c1054f874133b3eae169282b1c459ae6eeec
+0444 174B       2025-07-27 15:27:04 f183620ae4f564c989594293c652ba73456ffd
+0444 3.8KB      2025-07-27 15:26:08 a37bc5be785787e4a4defe64b7d1cbd3a2899d
+0444 1.7KB      2025-07-27 15:26:08 b82b6bbfcf3c21e4242a6bad395877135ca82f
+0444 447B       2025-07-27 15:26:08 bbe51e052d89497a3de3384a752b379d2070b5
+0444 54B        2025-07-27 11:34:21 4e6ed55bf98ef8a12a69dd3e2428612b622b94
+0444 1.9KB      2025-07-27 15:26:08 7a339dc7f4fe3942e5fc2b5e44bf31fbee4fef
+0444 86B        2025-07-27 15:26:39 61b7955cf4b8a651f2b4af2dc0b5f705ef42db
+0444 357B       2025-07-27 11:21:11 9411973920d10bbeaa9d24016c689b42530497
+0444 724B       2025-07-27 15:26:08 bf341fef98c3cc57169b821622fcdf49217a1a
+0444 1.1KB      2025-07-27 11:17:52 2abddd366ae1540d9a5038e7fe04cdcdbc84da
+0444 3.2KB      2025-07-27 11:17:52 3981c2bc3a7d142b11b7fc97ddf8901443fc4c
+0444 610B       2025-07-27 15:26:08 9ac63ad050f69235cfb4ae4e1afadba030e670
+0444 782B       2025-07-27 15:26:08 f02ea286749654176cc7266387716f6318caeb
+0444 86B        2025-07-27 11:34:21 87ad0eb2f10124545a40f8277a589915140045
+0444 700B       2025-07-27 15:26:08 050e6425b7dd8584eae9c915b082c1ca348092
+0444 2.4KB      2025-07-27 11:17:52 2a1c4e270fdc2e7e99601b4e287b391734b76b
+0444 758B       2025-07-27 15:26:08 82be66801be7456ecb99559547bc819a37cec1
+0444 3.4KB      2025-07-27 15:26:08 11b25c8b90ed420edf654daa5c8841cd7524b2
+0444 62B        2025-07-27 15:26:39 82dc41cf096436bcf52fa72d0fa5710e1baaa1
+0444 53B        2025-07-27 11:18:12 01425229a957e260d9e2fdeeba346431123338
+0444 271B       2025-07-27 15:26:39 950dc1bb33e784939e216aa698d5e48753532c
+0444 480B       2025-07-27 11:21:24 2378b31e1522549aebb54127796ce7d253cf3d
+0444 3.0KB      2025-07-27 15:26:08 668c62d07b7f5e18bb76f400279ccc2e9c78c6
+0444 63B        2025-07-27 11:18:12 3741060e4b47c325318ccc30630964af4bd2c8
+0444 348B       2025-07-27 11:16:38 3d33a42a3f11109e5079ef7e1a8b0a9dca5cd9
+0444 176B       2025-07-27 11:18:12 f7354b88bc480febfd9030dc06f65ff13b1c44
+0444 1.8KB      2025-07-27 15:26:08 90eb32a861c406a914e4895b9a8797f5365817
+0444 85B        2025-07-27 11:28:42 d4d520530f9f227a1653f0b1863131e77d0df3
+0444 1.5KB      2025-07-27 11:17:52 b0a6f2870350563e4fe886f5525b12b9e3aec4
+0444 681B       2025-07-27 15:26:08 dd5c8050e5d3d00c078cb2e3f95afeefb665ce
+0444 174B       2025-07-27 11:29:04 5a4cb3f8d03d90520668500b224535cb23c487
+0444 441B       2025-07-27 11:28:28 9807a8128213426715afc1209b303f9795b6be
+0444 2.0KB      2025-07-27 15:25:59 81f03441085e9408b5ac23e3a14654b95f23d0
+0444 86B        2025-07-27 11:28:42 ec6726cff8a3d1e97f3178d82f33e7197db783
+0444 881B       2025-07-27 11:31:06 70e755b5c62579d1c9ac6b50f095a3053204e6
+0444 141B       2025-07-27 15:26:39 09e3bca968dbe83b6445a99dd008647b0f72d7
+0444 53B        2025-07-27 15:26:39 30892a79d529be1d50338b737e8aef5bfbfca6
+0444 223B       2025-07-27 15:26:08 18f651d1fcab627423e61dd66cf37acce8604e
+0444 1.6KB      2025-07-27 11:28:28 70704c63802a73a57fd11b67fa16bdc7fd5428
+0444 151B       2025-07-27 15:26:08 ec5af6c717c1835b8dd95b7ce096b3d1133ca1
+0444 766B       2025-07-27 15:26:08 a38c768e5bd5290f92231454a831d3b175de15
+0444 427B       2025-07-27 15:26:08 d17a301d4a8a00a5352aab08141600b47c9450
+0444 2.0KB      2025-07-27 11:36:15 67968c3a04558ee4aa6d00c5576314f93073a0
+0444 389B       2025-07-27 11:36:15 d802f4d619fcf006038dde0417c74744eedc52
+0444 86B        2025-07-27 15:26:39 feeef793c92adb040f4ec6c92d61b5572e4b86
+0444 2.2KB      2025-07-27 15:26:08 1b9771500ee797b31b93b73abecdb0de1d23b6
+0444 1.2KB      2025-07-27 15:26:08 73582504f1465cf9f4f4381b64d9b7d43306c6
+0444 5.8KB      2025-07-27 11:17:52 c13b5b54d2d6d4e2dc2b9f5c852d12cee1fe13
+0444 390B       2025-07-27 11:34:21 b71df3dc94d20624b2cdbb9550e51109f99318
+0444 1.6KB      2025-07-27 15:26:08 9fa9751f2e413e38da2ebee5baabd69ecb32f6
+0444 426B       2025-07-27 15:27:04 6266546e8a92d4c744b6e8f5f85fe15b9f0672
+0444 2.6KB      2025-07-27 11:17:40 26b825f349661afe89d3c3c3b1ea599c19ef95
+0444 474B       2025-07-27 15:26:08 6569d99c64cb17998e39f679bb047937ad5752
+0644 41B        2025-07-27 15:26:39 main
+0644 41B        2025-07-27 15:27:04 commits
+0644 41B        2025-07-27 11:36:27 main
+0644 41B        2025-07-27 11:20:34 v0.5.0
+0644 562B       2025-07-27 11:16:31 .gitignore
+0644 3.8KB      2025-07-27 11:47:48 CONTRIBUTING.md
+0644 1.0KB      2025-07-27 10:51:48 LICENSE
+0644 5.4KB      2025-07-27 11:46:58 Makefile
+0644 8.4KB      2025-07-27 15:25:11 README.md
+0644 3.8KB      2025-07-27 11:38:22 RELEASE-NOTES-v0.5.0.md
+0644 3.5KB      2025-07-27 11:37:34 RELEASE-PLAN.md
+0644 4.1KB      2025-07-27 11:48:33 SECURITY.md
+0644 5B         2025-07-27 10:51:09 VERSION
+0755 17.6KB     2025-07-27 11:19:51 ollama-topic-forge
+0644 98B        2025-07-27 11:39:33 checksums.txt
+0644 129.0KB    2025-07-27 11:39:27 ollama-topic-forge-0.5.0.tar.gz
+0644 7.2KB      2025-07-27 12:26:04 GETTING-STARTED.md
+0644 5.2KB      2025-07-27 10:52:45 METHODOLOGY.md
+0644 4.8KB      2025-07-27 10:50:24 citations.md
+0644 12.8KB     2025-07-27 10:50:24 rfc-experimental-engineering.md
+0644 885B       2025-07-27 11:24:39 Makefile
+0644 3.6KB      2025-07-27 11:24:27 README.md
+0644 1.2KB      2025-07-27 10:50:31 Makefile
+0644 2.3KB      2025-07-27 10:50:31 README.md
+0755 5.0KB      2025-07-27 10:50:31 baseline-curl.sh
+0644 1.0KB      2025-07-27 10:50:31 models-list.json
+0644 812B       2025-07-27 10:50:31 test-structured-lean4-parsed.json
+0644 1.1KB      2025-07-27 10:50:31 test-structured-lean4.json
+0644 355B       2025-07-27 10:50:31 test-structured-simple-parsed.json
+0644 643B       2025-07-27 10:50:31 test-structured-simple.json
+0644 1.6KB      2025-07-27 10:50:31 test-unstructured.json
+0755 7.3KB      2025-07-27 10:50:31 run-experiment.sh
+0644 1.1KB      2025-07-27 10:50:31 repo-metadata.json
+0644 3.5KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.7KB      2025-07-27 10:50:31 Makefile
+0644 1.4KB      2025-07-27 10:50:31 README.md
+0755 514B       2025-07-27 10:50:31 debug-ollama.scm
+0755 4.7KB      2025-07-27 10:50:31 ollama-structured-v2.scm
+0755 9.7KB      2025-07-27 10:50:31 ollama-structured.scm
+0644 1.3KB      2025-07-27 10:50:31 Makefile
+0644 2.6KB      2025-07-27 10:50:31 README.md
+0644 2.0KB      2025-07-27 10:50:31 example-schemas.scm
+0755 9.5KB      2025-07-27 10:50:31 spec-json-converter.scm
+0644 2.3KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.8KB      2025-07-27 10:50:31 Makefile
+0644 1.4KB      2025-07-27 10:50:31 README.md
+0755 6.2KB      2025-07-27 10:50:31 github-client.scm
+0755 4.9KB      2025-07-27 10:50:31 pagination-test.scm
+0755 3.8KB      2025-07-27 10:50:31 rate-limit-test.scm
+0644 1.6KB      2025-07-27 10:50:31 github-repo-spec.scm
+0644 2.9KB      2025-07-27 10:50:31 github-search-spec.scm
+0644 1.5KB      2025-07-27 10:50:31 github-user-spec.scm
+0644 2.9KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.6KB      2025-07-27 10:50:31 Makefile
+0644 1.3KB      2025-07-27 10:50:31 README.md
+0644 9.1KB      2025-07-27 10:50:31 github-validation.scm
+0644 5.8KB      2025-07-27 10:50:31 ollama-validation.scm
+0644 6.3KB      2025-07-27 10:50:31 spec-registry.scm
+0755 9.1KB      2025-07-27 10:50:31 validation-tests.scm
+0755 10.7KB     2025-07-27 10:50:31 validator.scm
+0644 3.5KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.5KB      2025-07-27 10:50:31 Makefile
+0644 2.6KB      2025-07-27 10:50:31 README.md
+0644 6.4KB      2025-07-27 10:50:31 github-ollama-flow.md
+0644 10.2KB     2025-07-27 10:50:31 repo-analyzer.scm
+0755 11.8KB     2025-07-27 10:50:31 workflow-engine.scm
+0644 4.5KB      2025-07-27 10:50:31 code-review-workflow.scm
+0644 8.6KB      2025-07-27 10:50:31 data-pipeline-workflow.scm
+0644 5.0KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.5KB      2025-07-27 10:50:31 Makefile
+0644 940B       2025-07-27 10:50:31 README.md
+0644 11.0KB     2025-07-27 10:50:31 github-client-v2.scm
+0755 11.1KB     2025-07-27 10:50:31 simulator.scm
+0644 11.8KB     2025-07-27 10:50:31 topic-generator.scm
+0755 2.5KB      2025-07-27 10:50:31 validate-topics.sh
+0644 3.3KB      2025-07-27 10:50:31 FINDINGS.md
+0644 1.6KB      2025-07-27 10:50:31 Makefile
+0644 1.8KB      2025-07-27 10:50:31 README.md
+0644 1.8KB      2025-07-27 10:50:31 SUMMARY.md
+0755 4.6KB      2025-07-27 10:50:31 capture-ollama-samples.sh
+0644 5.5KB      2025-07-27 10:50:31 custom-json-parser.scm
+0644 5.9KB      2025-07-27 10:50:31 json-parser-proper.scm
+0644 6.1KB      2025-07-27 10:50:31 ollama-response-samples.md
+0644 401B       2025-07-27 10:50:31 01-simple-topics.json
+0644 256B       2025-07-27 10:50:31 02-topics-with-hyphens.json
+0644 183B       2025-07-27 10:50:31 03-topics-with-numbers.json
+0644 5.1KB      2025-07-27 10:50:31 test-json-options.scm
+0644 786B       2025-07-27 10:50:31 test-ollama-response.scm
+0644 1.7KB      2025-07-27 10:50:31 test-simple-json.scm
+0644 1.6KB      2025-07-27 10:50:31 test-simple-parse.scm
+0644 3.2KB      2025-07-27 10:50:31 test-with-samples.scm
+0644 1.4KB      2025-07-27 15:25:18 Makefile
+0644 1.5KB      2025-07-27 10:50:31 README.md
+0644 2.8KB      2025-07-27 10:50:31 SUMMARY.md
+0755 4.7KB      2025-07-27 10:50:31 capture-llama-responses.sh
+0644 10.8KB     2025-07-27 10:50:31 json-validator.scm
+0644 3.7KB      2025-07-27 10:50:31 ollama-schemas.json
+0644 6.5KB      2025-07-27 10:50:31 parsing-examples.md
+0644 7.1KB      2025-07-27 10:50:31 validate-responses.scm
+0644 457B       2025-07-27 10:50:31 README.md
+0644 369B       2025-07-27 10:50:31 README.md
+0644 389B       2025-07-27 10:50:31 README.md
+0644 383B       2025-07-27 10:50:31 README.md
+0644 1.1KB      2025-07-27 11:25:24 Makefile
+0644 2.1KB      2025-07-27 11:25:11 README.md
+0644 2.0KB      2025-07-27 11:28:01 Makefile
+0644 5.8KB      2025-07-27 11:27:42 README.md
+0644 1.5KB      2025-07-27 11:33:31 Makefile
+0644 3.8KB      2025-07-27 11:33:17 README.md
+0644 1.1KB      2025-07-27 11:44:51 Makefile
+0644 5.3KB      2025-07-27 11:44:38 README.md
+0644 1.4KB      2025-07-27 11:46:18 Makefile
+0644 4.0KB      2025-07-27 11:46:04 README.md
+0644 325B       2025-07-27 10:50:31 README.md
+0644 357B       2025-07-27 10:50:31 README.md
+0644 353B       2025-07-27 10:50:31 README.md
+0644 2.4KB      2025-07-27 15:34:50 Makefile
+0644 6.6KB      2025-07-27 15:34:22 README.md
+0644 2.2KB      2025-07-27 15:39:45 Makefile
+0644 10.3KB     2025-07-27 15:39:26 README.md
+0644 9.1KB      2025-07-27 15:38:09 README.md
+0644 3.6KB      2025-07-27 15:38:58 README.md
+0644 4.7KB      2025-07-27 15:44:27 Makefile
+0644 12.6KB     2025-07-27 15:43:56 README.md
+0644 7.9KB      2025-07-27 15:57:22 Makefile
+0644 17.1KB     2025-07-27 15:56:34 README.md
+0644 33.0KB     2025-07-27 16:54:34 all-tests-20250727-165434.txt
+0644 1.3KB      2025-07-27 16:50:19 test-01-debug-20250727-165019.txt
+0644 1.6KB      2025-07-27 16:52:03 test-results-20250727-165203.txt
+0755 2.4KB      2025-07-27 16:53:29 run-all-tests.sh
+0755 1.4KB      2025-07-27 16:53:09 01-interactive-debug.scm
+0755 2.2KB      2025-07-27 16:30:27 02-dry-run.scm
+0755 2.1KB      2025-07-27 16:30:54 03-directory-reader.scm
+0755 5.8KB      2025-07-27 16:31:36 04-disk-space-analyzer.scm
+0755 3.4KB      2025-07-27 16:32:09 05-letter-frequency.scm
+0755 2.9KB      2025-07-27 11:42:47 deps.sh
+0755 9.1KB      2025-07-27 10:53:27 validate-all.sh
+0644 2.3KB      2025-07-27 10:50:24 TopicsDisplay.tla
+0644 15.8KB     2025-07-27 10:50:24 api-specs.json
+0644 10.1KB     2025-07-27 10:50:24 debug-monitoring-spec.md
+0644 6.4KB      2025-07-27 10:50:24 ollama-generate-openapi.yaml
+0644 2.3KB      2025-07-27 10:50:24 property-tests.md
+0644 6.5KB      2025-07-27 10:50:24 repo-topic-generator-spec.md
+0644 9.7KB      2025-07-27 10:50:24 system-contracts.md
+0644 982B       2025-07-27 10:50:24 topics-format.ebnf
+0644 1.0KB      2025-07-27 10:50:24 topics-schema.json
+0755 7.3KB      2025-07-27 10:50:24 validate-topics.py
+0755 17.6KB     2025-07-27 10:50:03 ollama-topic-forge
+0644 621B       2025-07-27 10:52:13 Makefile
+0644 2.9KB      2025-07-27 10:50:09 test-environment.scm
+0644 4.4KB      2025-07-27 10:50:09 test-integration.scm
+0644 3.9KB      2025-07-27 10:50:09 test-parsing.scm
+0755 2.3KB      2025-07-27 10:50:09 test-runner.scm
+0644 3.7KB      2025-07-27 10:50:09 test-validation.scm
+0644 646B       2025-07-27 16:37:07 SEFACA-make
+0644 566B       2025-07-27 16:16:35 SEFACA-make~
+0755 301B       2025-07-27 16:07:07 SEFACA-run
+------------------------------------------------------------
+Total files: 413
+Total size: 1.1MB
+        0.05 real         0.05 user         0.00 sys
+
+
+================================================================
+TEST: Disk Space Analyzer
+Script: 04-disk-space-analyzer.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/04-disk-space-analyzer.scm 
+
+experiments/028-sefaca-guile-examples/run-all-tests.sh: line 18: 89146 Segmentation fault      (core dumped) guile3 "$SCRIPT_DIR/$script_name" $args 2>&1
+
+real	0m0.316s
+user	0m0.278s
+sys	0m0.042s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/04-disk-space-analyzer.scm 
+
+time: command terminated abnormally
+        0.02 real         0.00 user         0.01 sys
+Segmentation fault
+
+
+================================================================
+TEST: Letter Frequency Analyzer
+Script: 05-letter-frequency.scm
+================================================================
+
+--- Running WITHOUT SEFACA-run ---
+Command: guile3 experiments/028-sefaca-guile-examples/scripts/05-letter-frequency.scm 
+
+;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/05-letter-frequency.scm
+;;; compiled /home/jwalsh/.cache/guile/ccache/3.0-LE-8-4.7/home/jwalsh/projects/aygp-dr/ollama-topic-forge/experiments/028-sefaca-guile-examples/scripts/05-letter-frequency.scm.go
+Letter Frequency Analysis of /usr/share/dict/words
+==================================================
+Total letters analyzed: 2,258,050
+
+Letter frequencies:
+------------------------------
+ 10.43% e (235,433 occurrences)
+  8.91% i (201,100 occurrences)
+  8.84% a (199,618 occurrences)
+  7.56% o (170,745 occurrences)
+  7.13% r (161,036 occurrences)
+  7.03% n (158,788 occurrences)
+  6.77% t (152,868 occurrences)
+  6.18% s (139,585 occurrences)
+  5.78% l (130,514 occurrences)
+  4.58% c (103,464 occurrences)
+  3.87% u (87,398 occurrences)
+  3.46% p (78,184 occurrences)
+  3.13% m (70,727 occurrences)
+  3.02% d (68,226 occurrences)
+  2.85% h (64,379 occurrences)
+  2.29% y (51,696 occurrences)
+  2.09% g (47,113 occurrences)
+  1.79% b (40,453 occurrences)
+  1.07% f (24,180 occurrences)
+  0.89% v (20,183 occurrences)
+  0.72% k (16,178 occurrences)
+  0.61% w (13,879 occurrences)
+  0.37% z (8,463 occurrences)
+  0.31% x (6,936 occurrences)
+  0.17% q (3,734 occurrences)
+  0.14% j (3,170 occurrences)
+
+------------------------------
+Most common: 'e' (10.43%)
+Least common: 'j' (0.14%)
+
+real	0m2.171s
+user	0m1.603s
+sys	0m0.557s
+
+--- Running WITH SEFACA-run ---
+Command: ./tools/SEFACA-run guile3 experiments/028-sefaca-guile-examples/scripts/05-letter-frequency.scm 
+
+Letter Frequency Analysis of /usr/share/dict/words
+==================================================
+Total letters analyzed: 2,258,050
+
+Letter frequencies:
+------------------------------
+ 10.43% e (235,433 occurrences)
+  8.91% i (201,100 occurrences)
+  8.84% a (199,618 occurrences)
+  7.56% o (170,745 occurrences)
+  7.13% r (161,036 occurrences)
+  7.03% n (158,788 occurrences)
+  6.77% t (152,868 occurrences)
+  6.18% s (139,585 occurrences)
+  5.78% l (130,514 occurrences)
+  4.58% c (103,464 occurrences)
+  3.87% u (87,398 occurrences)
+  3.46% p (78,184 occurrences)
+  3.13% m (70,727 occurrences)
+  3.02% d (68,226 occurrences)
+  2.85% h (64,379 occurrences)
+  2.29% y (51,696 occurrences)
+  2.09% g (47,113 occurrences)
+  1.79% b (40,453 occurrences)
+  1.07% f (24,180 occurrences)
+  0.89% v (20,183 occurrences)
+  0.72% k (16,178 occurrences)
+  0.61% w (13,879 occurrences)
+  0.37% z (8,463 occurrences)
+  0.31% x (6,936 occurrences)
+  0.17% q (3,734 occurrences)
+  0.14% j (3,170 occurrences)
+
+------------------------------
+Most common: 'e' (10.43%)
+Least common: 'j' (0.14%)
+        1.95 real         1.41 user         0.52 sys
+
+
