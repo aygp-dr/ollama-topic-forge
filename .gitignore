@@ -58,3 +58,8 @@ desktop.ini
 # Local configuration
 /config.local
 /settings.local.*
+
+# Tools directory (ignore all except SEFACA tools)
+/tools/*
+!/tools/SEFACA-run
+!/tools/SEFACA-make
