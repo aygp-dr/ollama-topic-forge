@@ -1,0 +1,26 @@
+Context and Details for Push Target Addition
+
+BACKGROUND:
+User requested gmake push command to synchronize all commits, notes, and tags to remote repository. This supports the workflow of marking v0.5.0 release after testing.
+
+CHANGES MADE:
+1. Added 'push' target to Makefile
+2. Push operations include:
+   - git push origin main (commits)
+   - git push origin --notes (git notes)
+   - git push origin --tags (version tags)
+3. Added help documentation for the target
+
+TESTING:
+- Verified Makefile syntax is correct
+- Target appears in gmake help output
+
+EXPERIMENTS:
+None - straightforward Makefile addition
+
+DEVIATIONS:
+None
+
+FOLLOW-UP:
+- User wants experiment 000 demonstrating timeout-driven approach
+- This will be added to docs/development/experiments/
