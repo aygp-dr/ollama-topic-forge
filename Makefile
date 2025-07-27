@@ -109,6 +109,14 @@ check: ## Check system dependencies
 version: ## Show version information
 	@echo "$(PROJECT_NAME) version $(VERSION)"
 
+# Push with notes and tags
+push: ## Push commits with notes and tags
+	@echo "Pushing commits, notes, and tags..."
+	@git push origin main
+	@git push origin --notes
+	@git push origin --tags
+	@echo "✓ Push complete"
+
 # Help target
 help: ## Show this help message
 	@echo "$(PROJECT_NAME) - GitHub repository topic generator using Ollama LLM"
