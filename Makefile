@@ -121,6 +121,24 @@ check: ## Check system dependencies
 	@echo -n "Checking curl... "
 	@command -v curl >/dev/null && echo "✓" || echo "✗ (required)"
 
+# Run the tool in current directory
+run: build ## Run ollama-topic-forge in current directory
+	@echo "Running $(PROJECT_NAME)..."
+	@$(BUILD_DIR)/$(PROJECT_NAME) --dry-run --verbose
+
+# Verify Ollama is running
+verify-ollama: ## Check if Ollama server is accessible
+	@echo "Verifying Ollama server..."
+	@if curl -s http://localhost:11434/api/tags >/dev/null 2>&1; then \
+		echo "✓ Ollama server is running"; \
+		echo "Available models:"; \
+		curl -s http://localhost:11434/api/tags | jq -r '.models[]?.name' 2>/dev/null | head -5 || echo "  (unable to list models)"; \
+	else \
+		echo "✗ Ollama server not accessible"; \
+		echo "Please start Ollama with: ollama serve"; \
+		exit 1; \
+	fi
+
 # Show version
 version: ## Show version information
 	@echo "$(PROJECT_NAME) version $(VERSION)"

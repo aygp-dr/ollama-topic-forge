@@ -2,9 +2,12 @@
 
 🔥 **Professional GitHub repository topic generator powered by Ollama LLM**
 
+[![Status: Pre-release](https://img.shields.io/badge/Status-Pre--release-orange.svg)](https://github.com/your-org/ollama-topic-forge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Guile](https://img.shields.io/badge/Guile-3.0+-blue.svg)](https://www.gnu.org/software/guile/)
 [![Ollama](https://img.shields.io/badge/Ollama-Required-green.svg)](https://ollama.ai/)
+
+**Project Status**: 🚧 **Pre-release** - Core functionality complete, undergoing testing
 
 ## Overview
 
@@ -24,10 +27,21 @@ Ollama Topic Forge automatically analyzes your GitHub repositories and generates
 
 ### Prerequisites
 
-- [Guile Scheme](https://www.gnu.org/software/guile/) 3.0+
-- [Ollama](https://ollama.ai/) running locally
-- [GitHub CLI](https://cli.github.com/) (for repository updates)
-- [jq](https://jqlang.github.io/jq/) (for JSON processing)
+#### Core Requirements
+- [Guile Scheme](https://www.gnu.org/software/guile/) 3.0+ (tested with 3.0.7)
+- [Ollama](https://ollama.ai/) v0.1.0+ running locally
+- [GitHub CLI](https://cli.github.com/) v2.0+ (for repository updates)
+- [jq](https://jqlang.github.io/jq/) v1.6+ (for JSON processing)
+- [Git](https://git-scm.com/) v2.0+ (for repository access)
+- [GNU Make](https://www.gnu.org/software/make/) v4.0+ (for build system)
+
+#### Tested Versions
+- Guile: 3.0.7 on FreeBSD 14.3
+- Ollama: 0.1.29
+- GitHub CLI: 2.40.0
+- jq: 1.6
+- Git: 2.43.0
+- GNU Make: 4.4.1
 
 ### Installation
 
