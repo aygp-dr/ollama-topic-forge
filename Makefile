@@ -147,7 +147,7 @@ version: ## Show version information
 push: ## Push commits with notes and tags
 	@echo "Pushing commits, notes, and tags..."
 	@git push origin main
-	@git push origin --notes
+	@git push origin 'refs/notes/*'
 	@git push origin --tags
 	@echo "✓ Push complete"
 
