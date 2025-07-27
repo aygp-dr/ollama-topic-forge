@@ -1,6 +1,8 @@
-.PHONY: all capture validate test-validator check-tools clean
+.PHONY: all capture validate test-validator check-tools clean run
 
 all: check-tools
+
+run: validate  ## Alias for validate target
 
 capture: capture-llama-responses.sh
 	@echo "=== Capturing Llama 3.2 responses ==="

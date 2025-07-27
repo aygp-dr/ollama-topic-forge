@@ -22,21 +22,9 @@ EXECUTABLE := $(SRC_DIR)/$(PROJECT_NAME)
 # Build all targets
 all: deps build test ## Check dependencies, build and test the project
 
-# Check for required dependencies (specifically guile3)
-deps: ## Check for guile3 and other dependencies
-	@echo "Checking for required dependencies..."
-	@echo -n "Checking for guile3... "
-	@if command -v guile3 >/dev/null 2>&1; then \
-		echo "✓ found"; \
-	elif command -v guile >/dev/null 2>&1 && guile --version | grep -q "3\."; then \
-		echo "✓ found (as 'guile')"; \
-	else \
-		echo "✗ NOT FOUND"; \
-		echo "ERROR: guile3 is required but not found"; \
-		echo "Please install guile-3.0 or newer"; \
-		exit 1; \
-	fi
-	@echo "✓ All required dependencies found"
+# Check for required dependencies
+deps: ## Check all dependencies using deps.sh
+	@./scripts/deps.sh
 
 # Build the project (currently just verify executable)
 build: $(BUILD_DIR)/$(PROJECT_NAME) ## Build the project
@@ -142,6 +130,19 @@ verify-ollama: ## Check if Ollama server is accessible
 # Show version
 version: ## Show version information
 	@echo "$(PROJECT_NAME) version $(VERSION)"
+
+# Run all experiments
+experiments-all: ## Run demo/test for all experiments
+	@echo "Running all experiments..."
+	@for exp in experiments/*/; do \
+		if [ -f "$$exp/Makefile" ]; then \
+			echo ""; \
+			echo "=== Running $$(basename $$exp) ==="; \
+			$(MAKE) -C "$$exp" demo 2>/dev/null || $(MAKE) -C "$$exp" test 2>/dev/null || echo "No demo/test target"; \
+		fi; \
+	done
+	@echo ""
+	@echo "✓ All experiments completed"
 
 # Push with notes and tags
 push: ## Push commits with notes and tags

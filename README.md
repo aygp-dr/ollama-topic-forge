@@ -13,6 +13,33 @@
 
 Ollama Topic Forge automatically analyzes your GitHub repositories and generates relevant, high-quality topics using local LLM analysis. Built with a focus on reliability, formal contracts, and production-ready engineering practices.
 
+## Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  User/CLI   │────▶│  Main Tool  │────▶│   Git Repo  │
+└─────────────┘     └──────┬──────┘     └─────────────┘
+                           │
+                    ┌──────▼──────┐
+                    │  Validator  │ ← Contracts (specs/)
+                    └──────┬──────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        ▼                  ▼                  ▼
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Ollama    │    │   GitHub    │    │     jq      │
+│   Server    │    │    CLI      │    │   Parser    │
+└─────────────┘    └─────────────┘    └─────────────┘
+```
+
+Key components:
+- **Data Contracts**: JSON schemas and TLA+ specifications in `specs/`
+- **Experiments**: 22 documented experiments showing development process
+- **Validation**: Multi-layer validation at every API boundary
+- **Error Handling**: Retry logic with exponential backoff
+
+For detailed architecture, see [Getting Started Guide](docs/GETTING-STARTED.md)
+
 ## Features
 
 - 🤖 **LLM-Powered Analysis**: Uses Ollama for intelligent repository analysis
@@ -92,6 +119,11 @@ make test          # Run all tests
 make lint          # Code quality checks
 make check         # Verify dependencies
 make clean         # Clean build artifacts
+make experiments-all # Run all experiments
+
+# Additional tools
+./scripts/deps.sh  # Detailed dependency check
+./scripts/validate-all.sh  # Validate all experiments
 ```
 
 ### Project Structure
