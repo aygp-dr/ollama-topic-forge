@@ -20,7 +20,23 @@ TEST_DIR := tests
 EXECUTABLE := $(SRC_DIR)/$(PROJECT_NAME)
 
 # Build all targets
-all: build test ## Build and test the project
+all: deps build test ## Check dependencies, build and test the project
+
+# Check for required dependencies (specifically guile3)
+deps: ## Check for guile3 and other dependencies
+	@echo "Checking for required dependencies..."
+	@echo -n "Checking for guile3... "
+	@if command -v guile3 >/dev/null 2>&1; then \
+		echo "✓ found"; \
+	elif command -v guile >/dev/null 2>&1 && guile --version | grep -q "3\."; then \
+		echo "✓ found (as 'guile')"; \
+	else \
+		echo "✗ NOT FOUND"; \
+		echo "ERROR: guile3 is required but not found"; \
+		echo "Please install guile-3.0 or newer"; \
+		exit 1; \
+	fi
+	@echo "✓ All required dependencies found"
 
 # Build the project (currently just verify executable)
 build: $(BUILD_DIR)/$(PROJECT_NAME) ## Build the project
