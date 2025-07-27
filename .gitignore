@@ -1,0 +1,60 @@
+# Build artifacts
+/build/
+/dist/
+*.o
+*.so
+*.dylib
+
+# Test artifacts
+/coverage/
+/.coverage
+*.log
+test-results/
+
+# Dependencies
+/deps/
+/vendor/
+/node_modules/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.#*
+\#*#
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+/tmp/
+*.tmp
+*.temp
+*.cache
+
+# Guile/Scheme specific
+*.go
+*.log
+.guile-ccache/
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Generated documentation
+/docs/generated/
+/docs/_build/
+
+# Local configuration
+/config.local
+/settings.local.*
