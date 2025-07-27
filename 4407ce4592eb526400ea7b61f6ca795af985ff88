@@ -1,0 +1,35 @@
+Context and Details for Final Documentation Updates
+
+BACKGROUND:
+Final updates before creating public repository. Added Ollama version discovery experiment and corrected all version information based on actual testing.
+
+CHANGES MADE:
+1. Created experiment 016-ollama-version-discovery:
+   - Documents how to find CLI, server, and model versions
+   - Includes complete check script
+   - Shows compatibility matrix
+   - Provides debugging guidance
+
+2. Updated README.md:
+   - Corrected Ollama version to 0.9.6 (was 0.1.29)
+   - Added model recommendations with sizes
+   - Fixed GitHub URL in status badge (jwalsh/ollama-topic-forge)
+
+3. Added .claude/observations/TRUE-OBSERVER-REPORTS/2025-07-27-initial.md
+   - Tracks project inception and development
+
+TESTING:
+- Verified Ollama versions: CLI and server both 0.9.6
+- Confirmed model availability and sizes
+- Tested structured output with llama3.2:3b
+
+EXPERIMENTS:
+Experiment 016 completed successfully, documenting version discovery methods
+
+DEVIATIONS:
+None
+
+FOLLOW-UP:
+- Create public GitHub repository
+- Push all commits, notes, and tags
+- Repository ready for v0.5.0 pre-release
