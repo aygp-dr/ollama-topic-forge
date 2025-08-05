@@ -62,4 +62,4 @@ desktop.ini
 # Tools directory (ignore all except SEFACA tools)
 /tools/*
 !/tools/SEFACA-run
-!/tools/SEFACA-make
+!/tools/SEFACA-make.build/

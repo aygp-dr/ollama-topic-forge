@@ -78,7 +78,7 @@ For detailed architecture, see [Getting Started Guide](docs/GETTING-STARTED.md)
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/ollama-topic-forge.git
+git clone https://github.com/aygp-dr/ollama-topic-forge.git
 cd ollama-topic-forge
 
 # Build and install

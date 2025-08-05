@@ -6,14 +6,14 @@
 
 # Configuration
 PROJECT_NAME := ollama-topic-forge
-VERSION := $(shell cat VERSION 2>/dev/null || echo "0.1.0")
+VERSION := $(shell cat VERSION 2>/dev/null || echo "0.5.0")
 PREFIX ?= /usr/local
 BINDIR := $(PREFIX)/bin
 
 # Source and build directories
 SRC_DIR := src
-BUILD_DIR := build
-DIST_DIR := dist
+BUILD_DIR := .build
+DIST_DIR := .build/dist
 TEST_DIR := tests
 
 # Main executable
@@ -29,7 +29,7 @@ deps: ## Check all dependencies using deps.sh
 # Build the project (currently just verify executable)
 build: $(BUILD_DIR)/$(PROJECT_NAME) ## Build the project
 
-$(BUILD_DIR)/$(PROJECT_NAME): $(EXECUTABLE) | $(BUILD_DIR)
+$(BUILD_DIR)/$(PROJECT_NAME): $(EXECUTABLE) $(BUILD_DIR)
 	@echo "Building $(PROJECT_NAME)..."
 	@cp $(EXECUTABLE) $(BUILD_DIR)/$(PROJECT_NAME)
 	@chmod +x $(BUILD_DIR)/$(PROJECT_NAME)
@@ -65,12 +65,11 @@ uninstall: ## Uninstall from system (requires sudo)
 	@echo "✓ Uninstalled $(PROJECT_NAME)"
 
 # Create distribution package
-dist: build test | $(DIST_DIR) ## Create distribution package
+dist: build test $(DIST_DIR) ## Create distribution package
 	@echo "Creating distribution package..."
 	@tar -czf $(DIST_DIR)/$(PROJECT_NAME)-$(VERSION).tar.gz \
 		-C $(BUILD_DIR) $(PROJECT_NAME) \
-		-C ../docs README.md \
-		-C ../. LICENSE 2>/dev/null || true
+		-C ../. README.md LICENSE 2>/dev/null || true
 	@echo "✓ Distribution package: $(DIST_DIR)/$(PROJECT_NAME)-$(VERSION).tar.gz"
 
 $(DIST_DIR):
@@ -129,7 +128,7 @@ verify-ollama: ## Check if Ollama server is accessible
 
 # Show version
 version: ## Show version information
-	@echo "$(PROJECT_NAME) version $(VERSION)"
+	@echo "$(PROJECT_NAME) version" `cat VERSION 2>/dev/null || echo "0.5.0"`
 
 # Run all experiments
 experiments-all: ## Run demo/test for all experiments
