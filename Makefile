@@ -6,9 +6,14 @@
 
 # Configuration
 PROJECT_NAME := ollama-topic-forge
+PROJECT_ROOT := $(shell pwd)
 VERSION := $(shell cat VERSION 2>/dev/null || echo "0.5.0")
 PREFIX ?= /usr/local
 BINDIR := $(PREFIX)/bin
+
+# Export for subprocesses
+export PROJECT_NAME
+export PROJECT_ROOT
 
 # Source and build directories
 SRC_DIR := src
@@ -142,6 +147,101 @@ experiments-all: ## Run demo/test for all experiments
 	done
 	@echo ""
 	@echo "✓ All experiments completed"
+
+# Emacs development environment for Scheme
+emacs-dev: ## Start Emacs development environment with Scheme support
+	@echo "Starting Emacs development environment for $(PROJECT_NAME)..."
+	@if [ ! -f "$(PROJECT_NAME).el" ]; then \
+		echo "Creating $(PROJECT_NAME).el configuration..."; \
+		$(MAKE) emacs-config; \
+	fi
+	@echo "Starting tmux session: $(PROJECT_NAME)"
+	@tmux kill-session -t $(PROJECT_NAME) 2>/dev/null || true
+	@tmux new-session -d -s $(PROJECT_NAME) "emacs -nw -Q -l $(PROJECT_NAME).el"
+	@echo "✓ Emacs running in tmux session: $(PROJECT_NAME)"
+	@echo ""
+	@echo "Connect with: tmux attach -t $(PROJECT_NAME)"
+	@echo "TTY: $$(tmux list-panes -t $(PROJECT_NAME) -F '#{pane_tty}' 2>/dev/null || echo 'not available')"
+
+# Create Emacs configuration for project
+emacs-config: ## Generate project-specific Emacs configuration
+	@echo "Generating $(PROJECT_NAME).el configuration..."
+	@cat > $(PROJECT_NAME).el <<'EOF'
+;;; $(PROJECT_NAME).el --- Emacs configuration for $(PROJECT_NAME)
+;;; Commentary:
+;;; Project-specific Emacs configuration for Scheme development
+;;; Code:
+
+;; Package initialization
+(require 'package)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
+;; Ensure required packages
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+;; Geiser for Scheme/Guile support
+(use-package geiser-guile
+  :config
+  (setq geiser-guile-binary "guile3")
+  (setq geiser-default-implementation 'guile)
+  (setq geiser-active-implementations '(guile)))
+
+;; Paredit for structured editing
+(use-package paredit
+  :hook ((scheme-mode . paredit-mode)
+         (geiser-repl-mode . paredit-mode)
+         (emacs-lisp-mode . paredit-mode)))
+
+;; Org mode configuration
+(use-package org
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((scheme . t)
+     (shell . t))))
+
+;; TRAMP for remote editing
+(require 'tramp)
+(setq tramp-default-method "ssh")
+
+;; Project-specific settings
+(setq default-directory "$(PROJECT_ROOT)/")
+(setq scheme-program-name "guile3")
+
+;; Custom functions
+(defun $(PROJECT_NAME)-run-tests ()
+  "Run project tests."
+  (interactive)
+  (compile "make test"))
+
+(defun $(PROJECT_NAME)-build ()
+  "Build the project."
+  (interactive)
+  (compile "make build"))
+
+;; Key bindings
+(global-set-key (kbd "C-c t") '$(PROJECT_NAME)-run-tests)
+(global-set-key (kbd "C-c b") '$(PROJECT_NAME)-build)
+
+;; Start with project overview
+(find-file "$(PROJECT_ROOT)/README.md")
+(split-window-horizontally)
+(other-window 1)
+(dired "$(PROJECT_ROOT)/src")
+
+(message "$(PROJECT_NAME) development environment loaded")
+
+;;; $(PROJECT_NAME).el ends here
+EOF
+	@echo "✓ Created $(PROJECT_NAME).el"
 
 # Push with notes and tags
 push: ## Push commits with notes and tags
